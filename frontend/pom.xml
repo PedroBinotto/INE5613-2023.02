@@ -3,10 +3,35 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>br.ufsc</groupId>
-        <artifactId>ine5611</artifactId>
+        <artifactId>ine5613</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>frontend</artifactId>
     <name>Archetype - frontend</name>
     <url>http://maven.apache.org</url>
+
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <executions>
+            <execution>
+              <configuration>
+                <executable>python</executable>
+                <workingDirectory>src</workingDirectory>
+                <arguments>
+                  <argument>main.py</argument>
+                </arguments>
+              </configuration>
+              <id>python-build</id>
+              <phase>compile</phase>
+              <goals>
+                <goal>exec</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>
 </project>

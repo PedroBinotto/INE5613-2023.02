@@ -1,10 +1,10 @@
-package br.ufsc.ine5611;
+package br.ufsc.ine5613;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Ine5611ApplicationTests {
+class Ine5613ApplicationTests {
 
 	@Test
 	void contextLoads() {
