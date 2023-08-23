@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  # app:
+
+  postgres:
+    image: postgres:16beta1
+    ports:
+      - "5678:5432"
+    environment:
+      POSTGRES_DB: ine5613
+      POSTGRES_USER: ufsc
+      POSTGRES_PASSWORD: ufsc
+    restart: always
