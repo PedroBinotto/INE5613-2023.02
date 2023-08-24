@@ -19,7 +19,7 @@
             <execution>
               <configuration>
                 <executable>python</executable>
-                <workingDirectory>src</workingDirectory>
+                <workingDirectory>.</workingDirectory>
                 <arguments>
                   <argument>install.py</argument>
                 </arguments>
