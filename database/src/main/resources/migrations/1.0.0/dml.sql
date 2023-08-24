@@ -26,6 +26,6 @@ INSERT INTO tb_uf (id_uf, sigla, nome) VALUES (25, 'SE', 'Sergipe');
 INSERT INTO tb_uf (id_uf, sigla, nome) VALUES (26, 'SP', 'São Paulo');
 INSERT INTO tb_uf (id_uf, sigla, nome) VALUES (27, 'TO', 'Tocantins');
 
-INSERT INTO tb_cargo (id_cargo, nome) VALUES (1, 'GERENTE');
-INSERT INTO tb_cargo (id_cargo, nome) VALUES (2, 'VENDEDOR');
+INSERT INTO tb_cargo (id_cargo, nome, salario) VALUES (1, 'GERENTE', 7000);
+INSERT INTO tb_cargo (id_cargo, nome, salario) VALUES (2, 'VENDEDOR', 2000);
 -- etc etc ...

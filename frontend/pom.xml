@@ -21,7 +21,7 @@
                 <executable>python</executable>
                 <workingDirectory>src</workingDirectory>
                 <arguments>
-                  <argument>main.py</argument>
+                  <argument>install.py</argument>
                 </arguments>
               </configuration>
               <id>python-build</id>

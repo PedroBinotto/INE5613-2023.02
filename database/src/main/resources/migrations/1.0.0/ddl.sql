@@ -9,8 +9,9 @@ CREATE TABLE tb_uf
 );
 
 CREATE TABLE tb_cargo (
-  id_cargo   BIGINT     NOT NULL, 
-  nome       VARCHAR(16)  UNIQUE NOT NULL,
+  id_cargo   BIGINT           NOT NULL, 
+  nome       VARCHAR(16)      UNIQUE NOT NULL,
+  salario    DOUBLE PRECISION NOT NULL,
 
   CONSTRAINT pk_cargo PRIMARY KEY (id_cargo)
 );
@@ -88,7 +89,7 @@ CREATE TABLE tb_venda (
   CONSTRAINT fk_venda_lotacao     FOREIGN KEY (id_venda_funcionario, id_venda_estabelecimento, id_venda_cargo)
                                   REFERENCES tb_lotacao (id_lotacao_funcionario, id_lotacao_estabelecimento, id_lotacao_cargo),
   CONSTRAINT fk_venda_cliente     FOREIGN KEY (id_venda_cliente)     REFERENCES tb_cliente (id_cliente),
-  CONSTRAINT CK_VENDA_CARGO CHECK (id_venda_cargo IN (1))
+  CONSTRAINT ck_venda_cargo CHECK (id_venda_cargo IN (1))
 );
 
 -- tb_produto
