@@ -27,6 +27,18 @@ source ~/.sdkman/bin/sdkman-init.sh
 
 ---
 
+##### Instalando o [Maven](https://maven.apache.org/)
+
+Utilizando o SDK, encontre a versão (`3.x`) desejada (recomendada `3.8.7`) e
+instale o pacote na sua máquina
+
+```bash
+sdk list maven
+sdk install maven 3.8.7
+```
+
+---
+
 ##### Instalando o [Java](https://www.java.com/en/download/)
 
 Utilizando o SDK, encontre a versão desejada (recomendada `17.0.x`) e instale o
