@@ -7,6 +7,8 @@ setup(
     include_package_data=True,
     install_requires=[
         'Click',
+        'textual',
+        'textual-dev',
         'requests'
     ],
     entry_points={
