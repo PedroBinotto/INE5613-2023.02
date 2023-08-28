@@ -13,7 +13,7 @@ import lombok.Data;
         fields = {
             @FieldResult(name = "id", column = "id_estabelecimento"),
             @FieldResult(name = "endereco", column = "endereco_estabelecimento"),
-            @FieldResult(name = "idUf", column = "id_uf_estabelecimento"),
+            @FieldResult(name = "ufId", column = "id_uf_estabelecimento"),
         }
     )
 )
@@ -31,5 +31,5 @@ public class Estabelecimento {
     String endereco;
 
     @Column(name = "id_uf_estabelecimento")
-    Long idUf;
+    Long ufId;
 }

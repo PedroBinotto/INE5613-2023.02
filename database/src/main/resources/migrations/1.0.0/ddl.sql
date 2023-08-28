@@ -3,7 +3,7 @@ CREATE TABLE tb_uf
 (
     id_uf BIGINT       NOT NULL,
     sigla CHAR(2)      NOT NULL,
-    nome VARCHAR(32)   NOT NULL,
+    nome  VARCHAR(32)  NOT NULL,
 
     CONSTRAINT pk_uf PRIMARY KEY (id_uf)
 );
