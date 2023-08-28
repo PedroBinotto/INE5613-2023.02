@@ -19,17 +19,47 @@ import lombok.Data;
 )
 @NamedNativeQuery(
     name = "getEstabelecimentos",
-    query = "SELECT * FROM tb_estabelecimento",
+    query = """
+            SELECT * FROM tb_estabelecimento 
+            WHERE :ufFilter IS NULL 
+            OR id_uf_estabelecimento IN (:ufFilter)
+    """,
     resultSetMapping = "EstabelecimentoMapping"
+)
+@NamedNativeQuery(
+        name = "getEstabelecimentoById",
+        query = """
+            SELECT * 
+            FROM tb_estabelecimento 
+            WHERE id_estabelecimento = :estabelecimentoId 
+            LIMIT 1
+        """,
+        resultSetMapping = "EstabelecimentoMapping"
+)
+@NamedNativeQuery(
+        name = "saveEstabelecimento",
+        query = """
+            INSERT INTO tb_estabelecimento (endereco_estabelecimento, id_uf_estabelecimento)
+            VALUES (:endereco, :ufId)
+        """
+)
+@NamedNativeQuery(
+        name = "deleteEstabelecimentoById",
+        query = """
+            DELETE FROM tb_estabelecimento WHERE id_estabelecimento = :estabelecimentoId
+        """
+)
+@NamedNativeQuery(
+        name = "updateEstabelecimento",
+        query = """
+            UPDATE tb_estabelecimento 
+            SET endereco_estabelecimento = :endereco
+            WHERE id_estabelecimento = :estabelecimentoId 
+        """
 )
 public class Estabelecimento {
     @Id
-    @Column(name = "id_estabelecimento")
     Long id;
-
-    @Column(name = "endereco_estabelecimento")
     String endereco;
-
-    @Column(name = "id_uf_estabelecimento")
     Long ufId;
 }

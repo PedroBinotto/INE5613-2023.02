@@ -1,15 +1,17 @@
 package br.ufsc.ine5613.controller;
 
+import br.ufsc.ine5613.dto.EstabelecimentoSaveDto;
+import br.ufsc.ine5613.enums.UfEnum;
 import br.ufsc.ine5613.model.Estabelecimento;
 import br.ufsc.ine5613.query.EstabelecimentoQuery;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/estabelecimentos")
@@ -18,10 +20,45 @@ public class EstabelecimentoController {
     private final EstabelecimentoQuery estabelecimentoQuery;
 
     @GetMapping()       // TODO: Filtros com @RequestParam
-    public ResponseEntity<List<Estabelecimento>> getEstabelecimentos() {
-        val resultSet = this.estabelecimentoQuery.getEstabelecimentos();
-        System.out.println(resultSet);
-        System.out.println(resultSet.get(0).getEndereco());
-        return ResponseEntity.ok(resultSet);
+    public ResponseEntity<List<Estabelecimento>> getEstabelecimentos(@RequestParam(required = false) Optional<String[]> uf) {
+        try {
+            Long[] ufFilter = uf.isPresent()
+                    ? Arrays
+                        .stream(uf.get())
+                        .map(el -> UfEnum.getBySigla(el.toUpperCase()).getId() )
+                        .collect(Collectors.toList()).toArray(new Long[] {})
+                    : new Long[] {};
+            return ResponseEntity.ok(
+                this.estabelecimentoQuery.getEstabelecimentos(Arrays.stream(ufFilter).toList())
+            );
+        } catch (NullPointerException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/{estabelecimentoId}")
+    public ResponseEntity<Estabelecimento> getEstabelecimentoById(@PathVariable Long estabelecimentoId) {
+        return ResponseEntity.ok(this.estabelecimentoQuery.getEstabelecimentoById(estabelecimentoId));
+    }
+
+    @PostMapping()
+    public ResponseEntity<Void> saveEstabelecimento(@RequestBody EstabelecimentoSaveDto estabelecimento) {
+        this.estabelecimentoQuery.saveEstabelecimento(estabelecimento);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{estabelecimentoId}")
+    public ResponseEntity<Void> updateEstabelecimentoById(
+            @PathVariable Long estabelecimentoId,
+            @RequestBody EstabelecimentoSaveDto estabelecimento
+    ) {
+        this.estabelecimentoQuery.updateEstabelecimento(estabelecimentoId, estabelecimento);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{estabelecimentoId}")
+    public ResponseEntity<Void> deleteEstabelecimentoById(@PathVariable Long estabelecimentoId) {
+       this.estabelecimentoQuery.deleteEstabelecimentoById(estabelecimentoId);
+       return ResponseEntity.ok().build();
     }
 }
