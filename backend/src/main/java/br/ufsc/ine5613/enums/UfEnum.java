@@ -44,6 +44,15 @@ public enum UfEnum {
         return null;
     }
 
+    public static UfEnum getById(Long id) {
+        for (UfEnum uf : UfEnum.values()) {
+            if (uf.getId().equals(id)) {
+                return uf;
+            }
+        }
+        return null;
+    }
+
     private Long id;
     private String sigla;
     private String nome;

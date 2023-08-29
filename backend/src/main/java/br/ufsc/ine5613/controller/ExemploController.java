@@ -1,5 +1,6 @@
 package br.ufsc.ine5613.controller;
 
+import br.ufsc.ine5613.enums.UfEnum;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -14,5 +15,10 @@ public class ExemploController {
 	@GetMapping("/teste")
 	public ResponseEntity<ExemploDto> getTeste() {
 		return ResponseEntity.ok(new ExemploDto("Hello, World!"));
+	}
+
+	@GetMapping("/uf")
+	public ResponseEntity<UfEnum> getTesteUf() {
+		return ResponseEntity.ok(UfEnum.SC);
 	}
 }

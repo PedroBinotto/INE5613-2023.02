@@ -1,8 +1,9 @@
 package br.ufsc.ine5613.controller;
 
+import br.ufsc.ine5613.dto.EstabelecimentoResponseDto;
 import br.ufsc.ine5613.dto.EstabelecimentoSaveDto;
 import br.ufsc.ine5613.enums.UfEnum;
-import br.ufsc.ine5613.model.Estabelecimento;
+import br.ufsc.ine5613.mapper.EstabelecimentoMapper;
 import br.ufsc.ine5613.query.EstabelecimentoQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EstabelecimentoController {
     private final EstabelecimentoQuery estabelecimentoQuery;
+    private final EstabelecimentoMapper estabelecimentoMapper;
 
-    @GetMapping()       // TODO: Filtros com @RequestParam
-    public ResponseEntity<List<Estabelecimento>> getEstabelecimentos(@RequestParam(required = false) Optional<String[]> uf) {
+    @GetMapping()
+    public ResponseEntity<List<EstabelecimentoResponseDto>> getEstabelecimentos(
+            @RequestParam(required = false) Optional<String[]> uf
+    ) {
         try {
             Long[] ufFilter = uf.isPresent()
                     ? Arrays
@@ -29,7 +33,13 @@ public class EstabelecimentoController {
                         .collect(Collectors.toList()).toArray(new Long[] {})
                     : new Long[] {};
             return ResponseEntity.ok(
-                this.estabelecimentoQuery.getEstabelecimentos(Arrays.stream(ufFilter).toList())
+                this.estabelecimentoMapper
+                    .toDto(
+                        this.estabelecimentoQuery
+                            .getEstabelecimentos(
+                                Arrays.stream(ufFilter).toList()
+                            )
+                        )
             );
         } catch (NullPointerException e) {
             return ResponseEntity.badRequest().build();
@@ -37,8 +47,10 @@ public class EstabelecimentoController {
     }
 
     @GetMapping("/{estabelecimentoId}")
-    public ResponseEntity<Estabelecimento> getEstabelecimentoById(@PathVariable Long estabelecimentoId) {
-        return ResponseEntity.ok(this.estabelecimentoQuery.getEstabelecimentoById(estabelecimentoId));
+    public ResponseEntity<EstabelecimentoResponseDto> getEstabelecimentoById(@PathVariable Long estabelecimentoId) {
+        return ResponseEntity.ok(
+            this.estabelecimentoMapper.toDto(this.estabelecimentoQuery.getEstabelecimentoById(estabelecimentoId))
+        );
     }
 
     @PostMapping()
