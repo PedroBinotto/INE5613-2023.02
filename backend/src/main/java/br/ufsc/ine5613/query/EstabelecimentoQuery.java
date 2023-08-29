@@ -17,7 +17,6 @@ public class EstabelecimentoQuery {
 
     public List<Estabelecimento> getEstabelecimentos(List<Long> ufFilter) {
         val query = this.em.createNamedQuery("getEstabelecimentos", Estabelecimento.class);
-        System.out.println(ufFilter.toString());
         query.setParameter("ufFilter", ufFilter);
         return query.getResultList();
     }

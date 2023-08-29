@@ -34,12 +34,7 @@ public class EstabelecimentoController {
                     : new Long[] {};
             return ResponseEntity.ok(
                 this.estabelecimentoMapper
-                    .toDto(
-                        this.estabelecimentoQuery
-                            .getEstabelecimentos(
-                                Arrays.stream(ufFilter).toList()
-                            )
-                        )
+                    .toDto(this.estabelecimentoQuery.getEstabelecimentos(Arrays.stream(ufFilter).toList()))
             );
         } catch (NullPointerException e) {
             return ResponseEntity.badRequest().build();
