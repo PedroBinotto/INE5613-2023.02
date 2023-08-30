@@ -23,7 +23,7 @@ import lombok.Data;
     name = "PessoaFisicaDetailCompositeMapping",
         classes={
             @ConstructorResult(
-            targetClass= PessoaFisicaDetailCompositeDto.class,
+            targetClass = PessoaFisicaDetailCompositeDto.class,
             columns={
                 @ColumnResult(name="id"),
                 @ColumnResult(name="cpf"),
@@ -38,9 +38,8 @@ import lombok.Data;
         name = "getPessoasFisicas",
         query = """
             SELECT * FROM tb_pessoa_fisica
-            WHERE 
-            (:nomeFilter IS NULL OR UPPER(nome) IN (:nomeFilter)) AND
-            (:sobrenomeFilter IS NULL OR UPPER(sobrenome) IN (:sobrenomeFilter))
+            WHERE (:nomeFilter IS NULL OR UPPER(nome) IN (:nomeFilter))
+            AND   (:sobrenomeFilter IS NULL OR UPPER(sobrenome) IN (:sobrenomeFilter))
     """,
         resultSetMapping = "PessoaFisicaMapping"
 )
