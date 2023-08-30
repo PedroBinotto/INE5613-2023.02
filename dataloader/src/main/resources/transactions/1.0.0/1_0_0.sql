@@ -1,0 +1,10 @@
+INSERT INTO tb_pessoa_fisica (nome, sobrenome, cpf) VALUES ('João', 'Muniz', '59557485477');
+INSERT INTO tb_pessoa_fisica (nome, sobrenome, cpf) VALUES ('Fernanda', 'Ignacia', '64522261268');
+INSERT INTO tb_pessoa_fisica (nome, sobrenome, cpf) VALUES ('Lucimberto', 'Bernardes', '16420240409');
+INSERT INTO tb_pessoa_fisica (nome, sobrenome, cpf) VALUES ('Gláucio', 'Castilho', '94616128421');
+INSERT INTO tb_pessoa_fisica (nome, sobrenome, cpf) VALUES ('Luiz', 'Queiroz', '36666637291');
+INSERT INTO tb_pessoa_fisica (nome, sobrenome, cpf) VALUES ('José', 'Uchôa', '27405222153');
+INSERT INTO tb_pessoa_fisica (nome, sobrenome, cpf) VALUES ('Daniele', 'Zava', '07752621889');
+INSERT INTO tb_pessoa_fisica (nome, sobrenome, cpf) VALUES ('Cleyton', 'Conceição', '90751457213');
+INSERT INTO tb_pessoa_fisica (nome, sobrenome, cpf) VALUES ('Emanuel', 'Camelo', '80606623922');
+INSERT INTO tb_pessoa_fisica (nome, sobrenome, cpf) VALUES ('Tânia', 'Dias', '22999876904');

@@ -27,10 +27,11 @@
     <name>ine5613</name>
   <description>Projeto final disciplina bancos de dados</description>
     <modules>
-    <module>backend</module>
-    <module>frontend</module>
-    <module>database</module>
-  </modules>
+        <module>backend</module>
+        <module>frontend</module>
+        <module>database</module>
+        <module>dataloader</module>
+    </modules>
     <properties>
     <java.version>17</java.version>
   </properties>

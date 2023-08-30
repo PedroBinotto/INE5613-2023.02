@@ -110,11 +110,15 @@ mvn clean install -DskipTests
 
 # Para gerar o schema do banco:
 cd database
-mvn spring-boot:run
+mvn org.springframework.boot:spring-boot-maven-plugin:run
+
+# Para popular o banco com dados de teste (opcional):
+cd dataloader
+mvn org.springframework.boot:spring-boot-maven-plugin:run
 
 # Para executar o backend:
 cd backend
-mvn spring-boot:run
+mvn org.springframework.boot:spring-boot-maven-plugin:run
 
 # Para executar o fronted:
 cd frontend
