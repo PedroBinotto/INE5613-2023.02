@@ -24,7 +24,8 @@ public class FuncionarioController {
     @GetMapping()
     public ResponseEntity<List<FuncionarioDetailCompositeDto>> getFuncionarios(
             @RequestParam(required = false) Optional<String[]> nome,
-            @RequestParam(required = false) Optional<String[]> sobrenome
+            @RequestParam(required = false) Optional<String[]> sobrenome,
+            @RequestParam(required = false) Optional<String[]> cpf
     ) {
         try {
 
@@ -34,9 +35,8 @@ public class FuncionarioController {
             val sobrenomeFilter = sobrenome
                     .map(strings -> Arrays.stream(strings).map(String::toUpperCase).collect(Collectors.toList()))
                     .orElseGet(ArrayList::new);
-            return ResponseEntity.ok(this.funcionarioQuery.getFuncionarios(
-                   nomeFilter, sobrenomeFilter
-            ));
+            val cpfFilter = cpf.map(Arrays::asList).orElseGet(() -> new ArrayList<>() {});
+            return ResponseEntity.ok(this.funcionarioQuery.getFuncionarios(nomeFilter, sobrenomeFilter, cpfFilter));
         } catch (NullPointerException e) {
             return ResponseEntity.badRequest().build();
         }

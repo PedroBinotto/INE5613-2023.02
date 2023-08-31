@@ -40,6 +40,7 @@ import lombok.Data;
             SELECT * FROM tb_pessoa_fisica
             WHERE (:nomeFilter IS NULL OR UPPER(nome) IN (:nomeFilter))
             AND   (:sobrenomeFilter IS NULL OR UPPER(sobrenome) IN (:sobrenomeFilter))
+            AND   (:cpfFilter IS NULL OR cpf IN (:cpfFilter))
     """,
         resultSetMapping = "PessoaFisicaMapping"
 )

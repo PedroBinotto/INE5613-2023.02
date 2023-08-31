@@ -15,10 +15,15 @@ import java.util.List;
 public class FuncionarioQuery {
     private final EntityManager em;
 
-    public List<FuncionarioDetailCompositeDto> getFuncionarios(List<String> nomeFilter, List<String> sobrenomeFilter) {
+    public List<FuncionarioDetailCompositeDto> getFuncionarios(
+            List<String> nomeFilter,
+            List<String> sobrenomeFilter,
+            List<String> cpfFilter
+    ) {
         val query = this.em.createNamedQuery("getFuncionarios", FuncionarioDetailCompositeDto.class);
         query.setParameter("nomeFilter", nomeFilter);
         query.setParameter("sobrenomeFilter", sobrenomeFilter);
+        query.setParameter("cpfFilter", cpfFilter);
         return query.getResultList();
     }
 

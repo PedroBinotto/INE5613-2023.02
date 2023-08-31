@@ -26,7 +26,8 @@ public class PessoaFisicaController {
     @GetMapping()
     public ResponseEntity<List<PessoaFisicaResponseDto>> getPessoasFisicas(
             @RequestParam(required = false) Optional<String[]> nome,
-            @RequestParam(required = false) Optional<String[]> sobrenome
+            @RequestParam(required = false) Optional<String[]> sobrenome,
+            @RequestParam(required = false) Optional<String[]> cpf
     ) {
         try {
             val nomeFilter = nome
@@ -35,8 +36,9 @@ public class PessoaFisicaController {
             val sobrenomeFilter = sobrenome
                     .map(strings -> Arrays.stream(strings).map(String::toUpperCase).collect(Collectors.toList()))
                     .orElseGet(ArrayList::new);
+            val cpfFilter = cpf.map(Arrays::asList).orElseGet(() -> new ArrayList<>() {});
             return ResponseEntity.ok(
-                this.pessoaFisicaMapper.toDto(this.pessoaFisicaQuery.getPessoasFisicas(nomeFilter, sobrenomeFilter))
+                this.pessoaFisicaMapper.toDto(this.pessoaFisicaQuery.getPessoasFisicas(nomeFilter, sobrenomeFilter, cpfFilter))
             );
         } catch (NullPointerException e) {
             return ResponseEntity.badRequest().build();
@@ -46,11 +48,6 @@ public class PessoaFisicaController {
     @GetMapping("/{pessoaFisicaId}")
     public ResponseEntity<PessoaFisicaDetailCompositeDto> getPessoaFisicaById(@PathVariable Long pessoaFisicaId) {
         return ResponseEntity.ok(this.pessoaFisicaQuery.getPessoaFisicaById(pessoaFisicaId));
-    }
-
-    @GetMapping()
-    public ResponseEntity<PessoaFisicaDetailCompositeDto> getPessoaFisicaByCpf(@RequestParam(required = true) String cpf) {
-        return ResponseEntity.ok(this.pessoaFisicaQuery.getPessoaFisicaByCpf(cpf));
     }
 
     @PostMapping()

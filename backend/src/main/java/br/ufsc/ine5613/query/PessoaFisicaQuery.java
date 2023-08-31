@@ -16,22 +16,21 @@ import java.util.List;
 public class PessoaFisicaQuery {
     private final EntityManager em;
 
-    public List<PessoaFisica> getPessoasFisicas(List<String> nomeFilter, List<String> sobrenomeFilter) {
+    public List<PessoaFisica> getPessoasFisicas(
+            List<String> nomeFilter,
+            List<String> sobrenomeFilter,
+            List<String> cpfFilter
+    ) {
         val query = this.em.createNamedQuery("getPessoasFisicas", PessoaFisica.class);
         query.setParameter("nomeFilter", nomeFilter);
         query.setParameter("sobrenomeFilter", sobrenomeFilter);
+        query.setParameter("cpfFilter", cpfFilter);
         return query.getResultList();
     }
 
     public PessoaFisicaDetailCompositeDto getPessoaFisicaById(Long pessoaFisicaId) {
         val query = this.em.createNamedQuery("getPessoaFisicaById", PessoaFisicaDetailCompositeDto.class);
         query.setParameter("pessoaFisicaId", pessoaFisicaId);
-        return query.getSingleResult();
-    }
-
-    public PessoaFisicaDetailCompositeDto getPessoaFisicaByCpf(String cpf) {
-        val query = this.em.createNamedQuery("getPessoaFisicaByCpf", PessoaFisicaDetailCompositeDto.class);
-        query.setParameter("cpf", cpf);
         return query.getSingleResult();
     }
 
