@@ -29,6 +29,12 @@ public class PessoaFisicaQuery {
         return query.getSingleResult();
     }
 
+    public PessoaFisicaDetailCompositeDto getPessoaFisicaByCpf(String cpf) {
+        val query = this.em.createNamedQuery("getPessoaFisicaByCpf", PessoaFisicaDetailCompositeDto.class);
+        query.setParameter("cpf", cpf);
+        return query.getSingleResult();
+    }
+
     @Transactional
     public void savePessoaFisica(PessoaFisicaSaveDto pessoaFisica) {
         val query = this.em.createNamedQuery("savePessoaFisica");
@@ -39,7 +45,7 @@ public class PessoaFisicaQuery {
     }
 
     @Transactional
-    public void updatePessoaFisica(
+    public void updatePessoaFisicaById(
             Long pessoaFisicaId,
             PessoaFisicaSaveDto pessoaFisica
     ) {
@@ -51,7 +57,7 @@ public class PessoaFisicaQuery {
     }
 
     @Transactional
-    public void deletePessoaFisica(Long pessoaFisicaId) {
+    public void deletePessoaFisicaById(Long pessoaFisicaId) {
         val query = this.em.createNamedQuery("deletePessoaFisicaById");
         query.setParameter("pessoaFisicaId", pessoaFisicaId);
         query.executeUpdate();

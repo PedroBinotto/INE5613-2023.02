@@ -57,6 +57,19 @@ import lombok.Data;
         resultSetMapping = "PessoaFisicaDetailCompositeMapping"
 )
 @NamedNativeQuery(
+        name = "getPessoaFisicaByCpf",
+        query = """
+            SELECT id_pessoa_fisica as id, cpf, nome, sobrenome, array_to_json(array_agg(num_telefone)) as telefones
+            FROM tb_pessoa_fisica
+            LEFT JOIN tb_telefone
+            ON id_pessoa_fisica_telefone = id_pessoa_fisica
+            WHERE cpf = :cpf
+            GROUP BY id_pessoa_fisica
+            LIMIT 1
+        """,
+        resultSetMapping = "PessoaFisicaDetailCompositeMapping"
+)
+@NamedNativeQuery(
         name = "savePessoaFisica",
         query = """
             INSERT INTO tb_pessoa_fisica (cpf, nome, sobrenome)

@@ -38,6 +38,8 @@ import lombok.Data;
             FROM tb_funcionario
             JOIN tb_pessoa_fisica
             ON id_pessoa_fisica_funcionario = id_pessoa_fisica
+            WHERE (:nomeFilter IS NULL OR UPPER(nome) IN (:nomeFilter))
+            AND   (:sobrenomeFilter IS NULL OR UPPER(sobrenome) IN (:sobrenomeFilter))
         """,
         resultSetMapping = "FuncionarioDetailCompositeMapping"
 )

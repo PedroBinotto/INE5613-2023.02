@@ -59,7 +59,7 @@ public class EstabelecimentoController {
             @PathVariable Long estabelecimentoId,
             @RequestBody EstabelecimentoSaveDto estabelecimento
     ) {
-        this.estabelecimentoQuery.updateEstabelecimento(estabelecimentoId, estabelecimento);
+        this.estabelecimentoQuery.updateEstabelecimentoById(estabelecimentoId, estabelecimento);
         return ResponseEntity.ok().build();
     }
 

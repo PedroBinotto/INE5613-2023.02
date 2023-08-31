@@ -29,27 +29,28 @@ public class PessoaFisicaController {
             @RequestParam(required = false) Optional<String[]> sobrenome
     ) {
         try {
-            val nomeFilter = nome.isPresent()
-                    ? Arrays.stream(nome.get()).map(String::toUpperCase).collect(Collectors.toList())
-                    : new ArrayList<String>();
-            val sobrenomeFilter = sobrenome.isPresent()
-                    ? Arrays.stream(sobrenome.get()).map(String::toUpperCase).collect(Collectors.toList())
-                    : new ArrayList<String>();
+            val nomeFilter = nome
+                    .map(value -> Arrays.stream(value).map(String::toUpperCase).collect(Collectors.toList()))
+                    .orElseGet(ArrayList::new);
+            val sobrenomeFilter = sobrenome
+                    .map(strings -> Arrays.stream(strings).map(String::toUpperCase).collect(Collectors.toList()))
+                    .orElseGet(ArrayList::new);
             return ResponseEntity.ok(
-                this.pessoaFisicaMapper.toDto(
-                    this.pessoaFisicaQuery.getPessoasFisicas(
-                        nomeFilter,
-                        sobrenomeFilter
-                    ))
-                );
+                this.pessoaFisicaMapper.toDto(this.pessoaFisicaQuery.getPessoasFisicas(nomeFilter, sobrenomeFilter))
+            );
         } catch (NullPointerException e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @GetMapping("/{pessoaFisicaId}")
-    public ResponseEntity<PessoaFisicaDetailCompositeDto> getPessoaFisicaId(@PathVariable Long pessoaFisicaId) {
+    public ResponseEntity<PessoaFisicaDetailCompositeDto> getPessoaFisicaById(@PathVariable Long pessoaFisicaId) {
         return ResponseEntity.ok(this.pessoaFisicaQuery.getPessoaFisicaById(pessoaFisicaId));
+    }
+
+    @GetMapping()
+    public ResponseEntity<PessoaFisicaDetailCompositeDto> getPessoaFisicaByCpf(@RequestParam(required = true) String cpf) {
+        return ResponseEntity.ok(this.pessoaFisicaQuery.getPessoaFisicaByCpf(cpf));
     }
 
     @PostMapping()
@@ -59,17 +60,17 @@ public class PessoaFisicaController {
     }
 
     @PutMapping("/{pessoaFisicaId}")
-    public ResponseEntity<Void> updatePessoaFisica(
+    public ResponseEntity<Void> updatePessoaFisicaById(
             @PathVariable Long pessoaFisicaId,
             @RequestBody PessoaFisicaSaveDto pessoaFisica
     ) {
-        this.pessoaFisicaQuery.updatePessoaFisica(pessoaFisicaId, pessoaFisica);
+        this.pessoaFisicaQuery.updatePessoaFisicaById(pessoaFisicaId, pessoaFisica);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{pessoaFisicaId}")
     public ResponseEntity<Void> deletePessoaFisicaById(@PathVariable Long pessoaFisicaId) {
-        this.pessoaFisicaQuery.deletePessoaFisica(pessoaFisicaId);
+        this.pessoaFisicaQuery.deletePessoaFisicaById(pessoaFisicaId);
         return ResponseEntity.ok().build();
     }
 }

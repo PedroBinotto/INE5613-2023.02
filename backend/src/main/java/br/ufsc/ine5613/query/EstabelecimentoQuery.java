@@ -36,7 +36,7 @@ public class EstabelecimentoQuery {
     }
 
     @Transactional
-    public void updateEstabelecimento(
+    public void updateEstabelecimentoById(
             Long estabelecimentoId,
             EstabelecimentoSaveDto estabelecimento
     ) {
