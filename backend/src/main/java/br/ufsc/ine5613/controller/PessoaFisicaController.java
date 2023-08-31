@@ -3,8 +3,13 @@ package br.ufsc.ine5613.controller;
 import br.ufsc.ine5613.dto.PessoaFisicaDetailCompositeDto;
 import br.ufsc.ine5613.dto.PessoaFisicaResponseDto;
 import br.ufsc.ine5613.dto.PessoaFisicaSaveDto;
+import br.ufsc.ine5613.dto.TelefoneResponseDto;
+import br.ufsc.ine5613.dto.TelefoneSaveDto;
 import br.ufsc.ine5613.mapper.PessoaFisicaMapper;
+import br.ufsc.ine5613.mapper.TelefoneMapper;
 import br.ufsc.ine5613.query.PessoaFisicaQuery;
+import br.ufsc.ine5613.query.TelefoneQuery;
+
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +27,8 @@ import java.util.stream.Collectors;
 public class PessoaFisicaController {
     private final PessoaFisicaQuery pessoaFisicaQuery;
     private final PessoaFisicaMapper pessoaFisicaMapper;
+    private final TelefoneQuery telefoneQuery;
+    private final TelefoneMapper telefoneMapper;
 
     @GetMapping()
     public ResponseEntity<List<PessoaFisicaResponseDto>> getPessoasFisicas(
@@ -48,6 +55,29 @@ public class PessoaFisicaController {
     @GetMapping("/{pessoaFisicaId}")
     public ResponseEntity<PessoaFisicaDetailCompositeDto> getPessoaFisicaById(@PathVariable Long pessoaFisicaId) {
         return ResponseEntity.ok(this.pessoaFisicaQuery.getPessoaFisicaById(pessoaFisicaId));
+    }
+
+    @GetMapping("/{pessoaFisicaId}/telefones")
+    public ResponseEntity<List<TelefoneResponseDto>> getTelefonesPessoaFisicaById(@PathVariable Long pessoaFisicaId) {
+        return ResponseEntity.ok(this.telefoneMapper.toDto(this.telefoneQuery.getTelefonesByPessoaFisicaId(pessoaFisicaId)));
+    }
+
+    @PostMapping("/{pessoaFisicaId}/telefones")
+    public ResponseEntity<Void> saveTelefonePessoaFisicaById(
+            @PathVariable Long pessoaFisicaId,
+            @RequestBody TelefoneSaveDto telefoneSaveDto
+    ) {
+        this.telefoneQuery.saveTelefone(pessoaFisicaId, telefoneSaveDto.telefone());
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{pessoaFisicaId}/telefones/{telefoneId}")
+    public ResponseEntity<PessoaFisicaDetailCompositeDto> deleteTelefonePessoaFisicaById(
+            @PathVariable Long pessoaFisicaId,
+            @PathVariable Long telefoneId
+    ) {
+        this.telefoneQuery.deleteTelefone(pessoaFisicaId, telefoneId);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping()

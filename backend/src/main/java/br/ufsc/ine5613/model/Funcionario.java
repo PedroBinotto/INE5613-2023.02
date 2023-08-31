@@ -34,7 +34,7 @@ import lombok.Data;
 @NamedNativeQuery(
         name = "getFuncionarios",
         query = """
-            SELECT id_funcionario as id, cpf, nome, sobrenome
+            SELECT id_funcionario AS id, cpf, nome, sobrenome
             FROM tb_funcionario
             JOIN tb_pessoa_fisica
             ON id_pessoa_fisica_funcionario = id_pessoa_fisica
@@ -47,7 +47,7 @@ import lombok.Data;
 @NamedNativeQuery(
         name = "getFuncionarioById",
         query = """
-            SELECT id_funcionario as id, cpf, nome, sobrenome
+            SELECT id_funcionario AS id, cpf, nome, sobrenome
             FROM tb_funcionario
             JOIN tb_pessoa_fisica
             ON id_pessoa_fisica_funcionario = id_pessoa_fisica

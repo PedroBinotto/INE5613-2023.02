@@ -35,7 +35,7 @@ import br.ufsc.ine5613.dto.ClienteDetailCompositeDto;
 @NamedNativeQuery(
         name = "getClientes",
         query = """
-            SELECT id_cliente as id, cpf, nome, sobrenome
+            SELECT id_cliente AS id, cpf, nome, sobrenome
             FROM tb_cliente
             JOIN tb_pessoa_fisica
             ON id_pessoa_fisica_cliente = id_pessoa_fisica
@@ -48,7 +48,7 @@ import br.ufsc.ine5613.dto.ClienteDetailCompositeDto;
 @NamedNativeQuery(
         name = "getClienteById",
         query = """
-            SELECT id_cliente as id, cpf, nome, sobrenome
+            SELECT id_cliente AS id, cpf, nome, sobrenome
             FROM tb_cliente
             JOIN tb_pessoa_fisica
             ON id_pessoa_fisica_cliente = id_pessoa_fisica
