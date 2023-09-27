@@ -40,13 +40,14 @@ import lombok.Data;
             SELECT * FROM tb_pessoa_fisica
             WHERE (:nomeFilter IS NULL OR UPPER(nome) IN (:nomeFilter))
             AND   (:sobrenomeFilter IS NULL OR UPPER(sobrenome) IN (:sobrenomeFilter))
+            AND   (:cpfFilter IS NULL OR cpf IN (:cpfFilter))
     """,
         resultSetMapping = "PessoaFisicaMapping"
 )
 @NamedNativeQuery(
         name = "getPessoaFisicaById",
         query = """
-            SELECT id_pessoa_fisica as id, cpf, nome, sobrenome, array_to_json(array_agg(num_telefone)) as telefones
+            SELECT id_pessoa_fisica AS id, cpf, nome, sobrenome, array_to_json(array_agg(num_telefone)) as telefones
             FROM tb_pessoa_fisica
             LEFT JOIN tb_telefone
             ON id_pessoa_fisica_telefone = id_pessoa_fisica
@@ -59,7 +60,7 @@ import lombok.Data;
 @NamedNativeQuery(
         name = "getPessoaFisicaByCpf",
         query = """
-            SELECT id_pessoa_fisica as id, cpf, nome, sobrenome, array_to_json(array_agg(num_telefone)) as telefones
+            SELECT id_pessoa_fisica AS id, cpf, nome, sobrenome, array_to_json(array_agg(num_telefone)) as telefones
             FROM tb_pessoa_fisica
             LEFT JOIN tb_telefone
             ON id_pessoa_fisica_telefone = id_pessoa_fisica

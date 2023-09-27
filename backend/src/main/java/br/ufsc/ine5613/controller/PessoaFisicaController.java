@@ -3,8 +3,13 @@ package br.ufsc.ine5613.controller;
 import br.ufsc.ine5613.dto.PessoaFisicaDetailCompositeDto;
 import br.ufsc.ine5613.dto.PessoaFisicaResponseDto;
 import br.ufsc.ine5613.dto.PessoaFisicaSaveDto;
+import br.ufsc.ine5613.dto.TelefoneResponseDto;
+import br.ufsc.ine5613.dto.TelefoneSaveDto;
 import br.ufsc.ine5613.mapper.PessoaFisicaMapper;
+import br.ufsc.ine5613.mapper.TelefoneMapper;
 import br.ufsc.ine5613.query.PessoaFisicaQuery;
+import br.ufsc.ine5613.query.TelefoneQuery;
+
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +27,14 @@ import java.util.stream.Collectors;
 public class PessoaFisicaController {
     private final PessoaFisicaQuery pessoaFisicaQuery;
     private final PessoaFisicaMapper pessoaFisicaMapper;
+    private final TelefoneQuery telefoneQuery;
+    private final TelefoneMapper telefoneMapper;
 
     @GetMapping()
     public ResponseEntity<List<PessoaFisicaResponseDto>> getPessoasFisicas(
             @RequestParam(required = false) Optional<String[]> nome,
-            @RequestParam(required = false) Optional<String[]> sobrenome
+            @RequestParam(required = false) Optional<String[]> sobrenome,
+            @RequestParam(required = false) Optional<String[]> cpf
     ) {
         try {
             val nomeFilter = nome
@@ -35,8 +43,9 @@ public class PessoaFisicaController {
             val sobrenomeFilter = sobrenome
                     .map(strings -> Arrays.stream(strings).map(String::toUpperCase).collect(Collectors.toList()))
                     .orElseGet(ArrayList::new);
+            val cpfFilter = cpf.map(Arrays::asList).orElseGet(() -> new ArrayList<>() {});
             return ResponseEntity.ok(
-                this.pessoaFisicaMapper.toDto(this.pessoaFisicaQuery.getPessoasFisicas(nomeFilter, sobrenomeFilter))
+                this.pessoaFisicaMapper.toDto(this.pessoaFisicaQuery.getPessoasFisicas(nomeFilter, sobrenomeFilter, cpfFilter))
             );
         } catch (NullPointerException e) {
             return ResponseEntity.badRequest().build();
@@ -48,9 +57,27 @@ public class PessoaFisicaController {
         return ResponseEntity.ok(this.pessoaFisicaQuery.getPessoaFisicaById(pessoaFisicaId));
     }
 
-    @GetMapping()
-    public ResponseEntity<PessoaFisicaDetailCompositeDto> getPessoaFisicaByCpf(@RequestParam(required = true) String cpf) {
-        return ResponseEntity.ok(this.pessoaFisicaQuery.getPessoaFisicaByCpf(cpf));
+    @GetMapping("/{pessoaFisicaId}/telefones")
+    public ResponseEntity<List<TelefoneResponseDto>> getTelefonesPessoaFisicaById(@PathVariable Long pessoaFisicaId) {
+        return ResponseEntity.ok(this.telefoneMapper.toDto(this.telefoneQuery.getTelefonesByPessoaFisicaId(pessoaFisicaId)));
+    }
+
+    @PostMapping("/{pessoaFisicaId}/telefones")
+    public ResponseEntity<Void> saveTelefonePessoaFisicaById(
+            @PathVariable Long pessoaFisicaId,
+            @RequestBody TelefoneSaveDto telefoneSaveDto
+    ) {
+        this.telefoneQuery.saveTelefone(pessoaFisicaId, telefoneSaveDto.telefone());
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{pessoaFisicaId}/telefones/{telefoneId}")
+    public ResponseEntity<PessoaFisicaDetailCompositeDto> deleteTelefonePessoaFisicaById(
+            @PathVariable Long pessoaFisicaId,
+            @PathVariable Long telefoneId
+    ) {
+        this.telefoneQuery.deleteTelefone(pessoaFisicaId, telefoneId);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping()

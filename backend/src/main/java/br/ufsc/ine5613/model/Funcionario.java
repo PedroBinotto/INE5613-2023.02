@@ -34,19 +34,20 @@ import lombok.Data;
 @NamedNativeQuery(
         name = "getFuncionarios",
         query = """
-            SELECT id_funcionario as id, cpf, nome, sobrenome
+            SELECT id_funcionario AS id, cpf, nome, sobrenome
             FROM tb_funcionario
             JOIN tb_pessoa_fisica
             ON id_pessoa_fisica_funcionario = id_pessoa_fisica
             WHERE (:nomeFilter IS NULL OR UPPER(nome) IN (:nomeFilter))
             AND   (:sobrenomeFilter IS NULL OR UPPER(sobrenome) IN (:sobrenomeFilter))
+            AND   (:cpfFilter IS NULL OR cpf IN (:cpfFilter))
         """,
         resultSetMapping = "FuncionarioDetailCompositeMapping"
 )
 @NamedNativeQuery(
         name = "getFuncionarioById",
         query = """
-            SELECT id_funcionario as id, cpf, nome, sobrenome
+            SELECT id_funcionario AS id, cpf, nome, sobrenome
             FROM tb_funcionario
             JOIN tb_pessoa_fisica
             ON id_pessoa_fisica_funcionario = id_pessoa_fisica
