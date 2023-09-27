@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.ufsc.ine5613.model.Telefone;
 
-import jakarta.persistence.EntityManager;
+import javax.persistence.EntityManager;
 
 @Component
 @RequiredArgsConstructor

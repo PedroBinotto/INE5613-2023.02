@@ -2,7 +2,7 @@ package br.ufsc.ine5613.query;
 
 import br.ufsc.ine5613.dto.EstabelecimentoSaveDto;
 import br.ufsc.ine5613.model.Estabelecimento;
-import jakarta.persistence.EntityManager;
+import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Component;

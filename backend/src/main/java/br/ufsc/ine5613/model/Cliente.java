@@ -1,6 +1,6 @@
 package br.ufsc.ine5613.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 
 import br.ufsc.ine5613.dto.ClienteDetailCompositeDto;

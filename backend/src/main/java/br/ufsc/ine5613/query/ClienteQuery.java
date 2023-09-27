@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import br.ufsc.ine5613.dto.ClienteDetailCompositeDto;
 import br.ufsc.ine5613.dto.ClienteSaveDto;
 
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 @Component
 @RequiredArgsConstructor
