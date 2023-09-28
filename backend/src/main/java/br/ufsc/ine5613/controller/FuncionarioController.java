@@ -15,13 +15,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/funcionarios")
 @RequiredArgsConstructor
+@Tag(name = "funcionarios")
 public class FuncionarioController {
     private final FuncionarioQuery funcionarioQuery;
 
     @GetMapping()
+    @ApiOperation(value = "GET funcionarios", tags = "funcionarios")
     public ResponseEntity<List<FuncionarioDetailCompositeDto>> getFuncionarios(
             @RequestParam(required = false) Optional<String[]> nome,
             @RequestParam(required = false) Optional<String[]> sobrenome,
@@ -43,17 +48,20 @@ public class FuncionarioController {
     }
 
     @GetMapping("/{funcionarioId}")
+    @ApiOperation(value = "GET funcionario BY ID", tags = "funcionarios")
     public ResponseEntity<FuncionarioDetailCompositeDto> getFuncionarioById(@PathVariable Long funcionarioId) {
         return ResponseEntity.ok(this.funcionarioQuery.getFuncionarioById(funcionarioId));
     }
 
     @PostMapping()
+    @ApiOperation(value = "SAVE funcionario", tags = "funcionarios")
     public ResponseEntity<Void> saveFuncionario(@RequestBody FuncionarioSaveDto funcionario) {
         this.funcionarioQuery.saveFuncionario(funcionario);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{funcionarioId}")
+    @ApiOperation(value = "DELETE funcionario BY ID", tags = "funcionarios")
     public ResponseEntity<Void> deleteFuncionarioById(@PathVariable Long funcionarioId) {
         this.funcionarioQuery.deleteFuncionarioById(funcionarioId);
         return ResponseEntity.ok().build();

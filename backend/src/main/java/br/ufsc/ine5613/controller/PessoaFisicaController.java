@@ -21,9 +21,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/pessoasfisicas")
 @RequiredArgsConstructor
+@Tag(name = "pessoasfisicas")
 public class PessoaFisicaController {
     private final PessoaFisicaQuery pessoaFisicaQuery;
     private final PessoaFisicaMapper pessoaFisicaMapper;
@@ -31,6 +35,7 @@ public class PessoaFisicaController {
     private final TelefoneMapper telefoneMapper;
 
     @GetMapping()
+    @ApiOperation(value = "GET pessoasfisicas", tags = "pessoasfisicas")
     public ResponseEntity<List<PessoaFisicaResponseDto>> getPessoasFisicas(
             @RequestParam(required = false) Optional<String[]> nome,
             @RequestParam(required = false) Optional<String[]> sobrenome,
@@ -53,16 +58,19 @@ public class PessoaFisicaController {
     }
 
     @GetMapping("/{pessoaFisicaId}")
+    @ApiOperation(value = "GET pessoafisica BY ID", tags = "pessoasfisicas")
     public ResponseEntity<PessoaFisicaDetailCompositeDto> getPessoaFisicaById(@PathVariable Long pessoaFisicaId) {
         return ResponseEntity.ok(this.pessoaFisicaQuery.getPessoaFisicaById(pessoaFisicaId));
     }
 
     @GetMapping("/{pessoaFisicaId}/telefones")
+    @ApiOperation(value = "GET telefones BY pessoafisica ID", tags = "pessoasfisicas")
     public ResponseEntity<List<TelefoneResponseDto>> getTelefonesPessoaFisicaById(@PathVariable Long pessoaFisicaId) {
         return ResponseEntity.ok(this.telefoneMapper.toDto(this.telefoneQuery.getTelefonesByPessoaFisicaId(pessoaFisicaId)));
     }
 
     @PostMapping("/{pessoaFisicaId}/telefones")
+    @ApiOperation(value = "SAVE telefone BY pessoafisica ID", tags = "pessoasfisicas")
     public ResponseEntity<Void> saveTelefonePessoaFisicaById(
             @PathVariable Long pessoaFisicaId,
             @RequestBody TelefoneSaveDto telefoneSaveDto
@@ -72,6 +80,7 @@ public class PessoaFisicaController {
     }
 
     @DeleteMapping("/{pessoaFisicaId}/telefones/{telefoneId}")
+    @ApiOperation(value = "DELETE telefone BY pessoafisica ID, telefone ID", tags = "pessoasfisicas")
     public ResponseEntity<PessoaFisicaDetailCompositeDto> deleteTelefonePessoaFisicaById(
             @PathVariable Long pessoaFisicaId,
             @PathVariable Long telefoneId
@@ -81,12 +90,14 @@ public class PessoaFisicaController {
     }
 
     @PostMapping()
+    @ApiOperation(value = "SAVE pessoafisica", tags = "pessoasfisicas")
     public ResponseEntity<Void> savePessoaFisica(@RequestBody PessoaFisicaSaveDto pessoaFisica) {
         this.pessoaFisicaQuery.savePessoaFisica(pessoaFisica);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{pessoaFisicaId}")
+    @ApiOperation(value = "UPDATE pessoafisica BY ID", tags = "pessoasfisicas")
     public ResponseEntity<Void> updatePessoaFisicaById(
             @PathVariable Long pessoaFisicaId,
             @RequestBody PessoaFisicaSaveDto pessoaFisica
@@ -96,6 +107,7 @@ public class PessoaFisicaController {
     }
 
     @DeleteMapping("/{pessoaFisicaId}")
+    @ApiOperation(value = "DELETE pessoafisica BY ID", tags = "pessoasfisicas")
     public ResponseEntity<Void> deletePessoaFisicaById(@PathVariable Long pessoaFisicaId) {
         this.pessoaFisicaQuery.deletePessoaFisicaById(pessoaFisicaId);
         return ResponseEntity.ok().build();
