@@ -126,7 +126,7 @@ mvn org.springframework.boot:spring-boot-maven-plugin:run
 
 # Servidor estará ativo na porta 8080
 #   - Documentação interativa da API disponibilizada em         http://localhost:8080/swagger-ui/index.html
-#   - Schema da API em formato JSON poderá ser acessada em      http://localhost:8080/v2/api-docs
+#   - Schema da API em formato JSON poderá ser acessada em      http://localhost:8080/v3/api-docs
 ```
 
 - Executando o Fronte-End do projeto _(Work in Progress)_:
