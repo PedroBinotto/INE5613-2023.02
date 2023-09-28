@@ -23,7 +23,7 @@ import br.ufsc.ine5613.dto.ClienteDetailCompositeDto;
 import br.ufsc.ine5613.dto.ClienteSaveDto;
 import br.ufsc.ine5613.query.ClienteQuery;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -34,7 +34,7 @@ public class ClienteController {
 	private final ClienteQuery clienteQuery;
 
 	@GetMapping()
-	@ApiOperation(value = "GET clientes", tags = "clientes")
+	@Operation(summary = "GET clientes", tags = "clientes")
 	public ResponseEntity<List<ClienteDetailCompositeDto>> getClientes(
 			@RequestParam(required = false) Optional<String[]> nome,
 			@RequestParam(required = false) Optional<String[]> sobrenome,
@@ -55,20 +55,20 @@ public class ClienteController {
 	}
 
 	@GetMapping("/{clienteId}")
-	@ApiOperation(value = "GET cliente BY ID", tags = "clientes")
+	@Operation(summary = "GET cliente BY ID", tags = "clientes")
 	public ResponseEntity<ClienteDetailCompositeDto> getClienteById(@PathVariable Long clienteId) {
 		return ResponseEntity.ok(this.clienteQuery.getClienteById(clienteId));
 	}
 
 	@PostMapping()
-	@ApiOperation(value = "SAVE cliente", tags = "clientes")
+	@Operation(summary = "SAVE cliente", tags = "clientes")
 	public ResponseEntity<Void> saveCliente(@RequestBody ClienteSaveDto cliente) {
 		this.clienteQuery.saveCliente(cliente);
 		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping("/{clienteId}")
-	@ApiOperation(value = "DELETE cliente BY ID", tags = "clientes")
+	@Operation(summary = "DELETE cliente BY ID", tags = "clientes")
 	public ResponseEntity<Void> deleteClienteById(@PathVariable Long clienteId) {
 		this.clienteQuery.deleteClienteById(clienteId);
 		return ResponseEntity.ok().build();

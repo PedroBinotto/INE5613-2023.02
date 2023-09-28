@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -26,7 +26,7 @@ public class EstabelecimentoController {
     private final EstabelecimentoMapper estabelecimentoMapper;
 
     @GetMapping()
-    @ApiOperation(value = "GET estabelecimentos", tags = "estabelecimentos")
+    @Operation(summary = "GET estabelecimentos", tags = "estabelecimentos")
     public ResponseEntity<List<EstabelecimentoResponseDto>> getEstabelecimentos(
             @RequestParam(required = false) Optional<String[]> uf
     ) {
@@ -47,7 +47,7 @@ public class EstabelecimentoController {
     }
 
     @GetMapping("/{estabelecimentoId}")
-    @ApiOperation(value = "GET estabelecimento BY ID", tags = "estabelecimentos")
+    @Operation(summary = "GET estabelecimento BY ID", tags = "estabelecimentos")
     public ResponseEntity<EstabelecimentoResponseDto> getEstabelecimentoById(@PathVariable Long estabelecimentoId) {
         return ResponseEntity.ok(
             this.estabelecimentoMapper.toDto(this.estabelecimentoQuery.getEstabelecimentoById(estabelecimentoId))
@@ -55,14 +55,14 @@ public class EstabelecimentoController {
     }
 
     @PostMapping()
-    @ApiOperation(value = "SAVE estabelecimento", tags = "estabelecimentos")
+    @Operation(summary = "SAVE estabelecimento", tags = "estabelecimentos")
     public ResponseEntity<Void> saveEstabelecimento(@RequestBody EstabelecimentoSaveDto estabelecimento) {
         this.estabelecimentoQuery.saveEstabelecimento(estabelecimento);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{estabelecimentoId}")
-    @ApiOperation(value = "UPDATE estabelecimento BY ID", tags = "estabelecimentos")
+    @Operation(summary = "UPDATE estabelecimento BY ID", tags = "estabelecimentos")
     public ResponseEntity<Void> updateEstabelecimentoById(
             @PathVariable Long estabelecimentoId,
             @RequestBody EstabelecimentoSaveDto estabelecimento
@@ -72,7 +72,7 @@ public class EstabelecimentoController {
     }
 
     @DeleteMapping("/{estabelecimentoId}")
-    @ApiOperation(value = "DELETE estabelecimento BY ID", tags = "estabelecimentos")
+    @Operation(summary = "DELETE estabelecimento BY ID", tags = "estabelecimentos")
     public ResponseEntity<Void> deleteEstabelecimentoById(@PathVariable Long estabelecimentoId) {
        this.estabelecimentoQuery.deleteEstabelecimentoById(estabelecimentoId);
        return ResponseEntity.ok().build();

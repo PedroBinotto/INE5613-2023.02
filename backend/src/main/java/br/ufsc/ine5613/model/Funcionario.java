@@ -1,7 +1,7 @@
 package br.ufsc.ine5613.model;
 
 import br.ufsc.ine5613.dto.FuncionarioDetailCompositeDto;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data

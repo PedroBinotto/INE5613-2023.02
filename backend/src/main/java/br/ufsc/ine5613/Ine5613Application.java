@@ -1,16 +1,14 @@
 package br.ufsc.ine5613;
 
-import java.util.Collections;
-
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 
 @SpringBootApplication
 public class Ine5613Application {
@@ -20,25 +18,22 @@ public class Ine5613Application {
 	}
 
 	@Bean
-	public Docket swaggerConfiguration() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.apis(RequestHandlerSelectors.basePackage("br.ufsc.ine5613"))
-				.build()
-				.apiInfo(apiDetails());
-	}
-
-	private ApiInfo apiDetails() {
-		return new ApiInfo(
-				"INE5613 Rest API",
-				"API Rest para o trabalho final da disciplina de Bancos de Dados I",
-				"1.0",
-				"https://desciclopedia.org/wiki/Porra_nenhuma",
-				new Contact("Pedro Binotto", "http://github.com/PedroBinotto", "pedrosantibinotto@gmail.com"),
-				"GNU GENERAL PUBLIC LICENSE",
-				"https://www.gnu.org/licenses/gpl-3.0-standalone.html",
-				Collections.emptyList()
-		);
+	public OpenAPI apiDetails() {
+		return new OpenAPI()
+				.info(new Info()
+						.title("INE5613 Rest API")
+						.description("API Rest para o trabalho final da disciplina de Bancos de Dados I")
+						.version("1.0")
+						.license(new License()
+								.name("GNU GENERAL PUBLIC LICENSE")
+								.url("https://www.gnu.org/licenses/gpl-3.0-standalone.html")
+						)
+						.contact(new Contact()
+								.name("Pedro Binotto")
+								.email("pedrosantibinotto@gmail.com")
+								.url("http://github.com/PedroBinotto")
+						)
+				);
 	}
 
 }

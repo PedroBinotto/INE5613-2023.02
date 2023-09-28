@@ -1,7 +1,7 @@
 package br.ufsc.ine5613.model;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
