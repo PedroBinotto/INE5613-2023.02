@@ -118,7 +118,8 @@ sudo pacman -S docker-compose
 > ```
 >
 > - _**Obs.:** Caso seja a primeira vez do usuário utilizando containers do Docker nesta instalação do sistema
-> operacional, será necessário adicionar o usuário ao grupo de privilégios do Unix:_
+> operacional, será necessário adicionar o usuário ao grupo de privilégios do Unix e, em seguida, reiniciar o
+> sistema para que as mudanças façam efeito:_
 > ```bash
 > sudo usermod -aG docker $(whoami)
 > ```
