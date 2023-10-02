@@ -100,40 +100,46 @@ sudo pacman -S docker-compose
 #### Compilando e executando
 
 - Na raiz do projeto, execute os seguintes comandos:
-
-```bash
-# Para subir o container do banco de dados:
-docker-compose up -d postgres
-
-# Para compilar o código-fonte
-mvn clean install -DskipTests
-
-# Para gerar o schema do banco:
-cd database
-mvn org.springframework.boot:spring-boot-maven-plugin:run
-
-# Para popular o banco com dados de teste (opcional):
-cd dataloader
-mvn org.springframework.boot:spring-boot-maven-plugin:run
-```
+>
+> ```bash
+> # Para subir o container do banco de dados:
+> docker-compose up -d postgres
+>
+> # Para compilar o código-fonte
+> mvn clean install -DskipTests
+>
+> # Para gerar o schema do banco:
+> cd database
+> mvn org.springframework.boot:spring-boot-maven-plugin:run
+>
+> # Para popular o banco com dados de teste (opcional):
+> cd dataloader
+> mvn org.springframework.boot:spring-boot-maven-plugin:run
+> ```
+>
+> - _**Obs.:** Caso seja a primeira vez do usuário utilizando containers do Docker nesta instalação do sistema
+> operacional, será necessário adicionar o usuário ao grupo de privilégios do Unix:_
+> ```bash
+> sudo usermod -aG docker $(whoami)
+> ```
 
 - Executando o Back-End do projeto:
-
-```bash
-# Para executar o backend:
-cd backend
-mvn org.springframework.boot:spring-boot-maven-plugin:run
-
-# Servidor estará ativo na porta 8080
-#   - Documentação interativa da API disponibilizada em         http://localhost:8080/swagger-ui/index.html
-#   - Schema da API em formato JSON poderá ser acessada em      http://localhost:8080/v3/api-docs
-```
+> 
+> ```bash
+> # Para executar o backend:
+> cd backend
+> mvn org.springframework.boot:spring-boot-maven-plugin:run
+> 
+> # Servidor estará ativo na porta 8080
+> #   - Documentação interativa da API disponibilizada em         http://localhost:8080/swagger-ui/index.html
+> #   - Schema da API em formato JSON poderá ser acessada em      http://localhost:8080/v3/api-docs
+> ```
 
 - Executando o Fronte-End do projeto _(Work in Progress)_:
-
-```bash
-# Para executar o fronted:
-cd frontend
-source ./.venv/bin/activate
-ine5613 start
-```
+>
+> ```bash
+> # Para executar o fronted:
+> cd frontend
+> source ./.venv/bin/activate
+> ine5613 start
+> ```
