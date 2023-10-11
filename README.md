@@ -136,7 +136,7 @@ sudo pacman -S docker-compose
 > #   - Schema da API em formato JSON poderá ser acessada em      http://localhost:8080/v3/api-docs
 > ```
 
-- Executando o Fronte-End do projeto _(Work in Progress)_:
+- Executando o Front-End do projeto _(Work in Progress)_:
 >
 > ```bash
 > # Para executar o fronted:
