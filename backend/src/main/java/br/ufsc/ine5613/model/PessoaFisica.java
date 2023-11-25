@@ -21,8 +21,8 @@ import lombok.Data;
 )
 @SqlResultSetMapping(
     name = "PessoaFisicaDetailCompositeMapping",
-        classes={
-            @ConstructorResult(
+    classes={
+        @ConstructorResult(
             targetClass = PessoaFisicaDetailCompositeDto.class,
             columns={
                 @ColumnResult(name="id"),

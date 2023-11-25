@@ -17,6 +17,39 @@ import lombok.Data;
         }
     )
 )
+@NamedNativeQuery(
+        name = "getProdutos",
+        query = """
+            SELECT * FROM tb_produto
+            WHERE :nomeFilter IS NULL
+            OR UPPER(nome) IN (:nomeFilter)
+    """,
+        resultSetMapping = "ProdutoMapping"
+)
+@NamedNativeQuery(
+        name = "getProdutoById",
+        query = """
+            SELECT * FROM tb_produto
+            WHERE id_produto = :produtoId
+            LIMIT 1
+    """,
+        resultSetMapping = "ProdutoMapping"
+)
+@NamedNativeQuery(
+        name = "saveProduto",
+        query = """
+            INSERT INTO tb_produto (nome, valor)
+            VALUES (:nome, :valor)
+    """,
+        resultSetMapping = "ProdutoMapping"
+)
+@NamedNativeQuery(
+        name = "deleteProdutoById",
+        query = """
+            DELETE FROM tb_produto WHERE id_produto = :produtoId
+    """,
+        resultSetMapping = "ProdutoMapping"
+)
 public class Produto {
     @Id
     Long id;

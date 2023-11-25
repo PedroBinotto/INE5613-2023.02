@@ -29,7 +29,7 @@ import lombok.Data;
 @NamedNativeQuery(
         name = "getEstabelecimentoById",
         query = """
-            SELECT * 
+            SELECT *
             FROM tb_estabelecimento 
             WHERE id_estabelecimento = :estabelecimentoId 
             LIMIT 1

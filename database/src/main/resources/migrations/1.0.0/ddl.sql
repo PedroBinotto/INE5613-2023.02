@@ -89,7 +89,7 @@ CREATE TABLE tb_venda (
   CONSTRAINT fk_venda_lotacao     FOREIGN KEY (id_venda_funcionario, id_venda_estabelecimento, id_venda_cargo)
                                   REFERENCES tb_lotacao (id_lotacao_funcionario, id_lotacao_estabelecimento, id_lotacao_cargo),
   CONSTRAINT fk_venda_cliente     FOREIGN KEY (id_venda_cliente)     REFERENCES tb_cliente (id_cliente),
-  CONSTRAINT ck_venda_cargo CHECK (id_venda_cargo IN (1))
+  CONSTRAINT ck_venda_cargo CHECK (id_venda_cargo IN (2))
 );
 
 -- tb_produto

@@ -28,15 +28,13 @@ public class EstabelecimentoController {
     @GetMapping()
     @Operation(summary = "GET estabelecimentos", tags = "estabelecimentos")
     public ResponseEntity<List<EstabelecimentoResponseDto>> getEstabelecimentos(
-            @RequestParam(required = false) Optional<String[]> uf
+            @RequestParam(required = false) Optional<UfEnum[]> uf
     ) {
         try {
-            Long[] ufFilter = uf.isPresent()
-                    ? Arrays
-                        .stream(uf.get())
-                        .map(el -> UfEnum.getBySigla(el.toUpperCase()).getId() )
-                        .collect(Collectors.toList()).toArray(new Long[] {})
-                    : new Long[] {};
+            Long[] ufFilter = uf.map(ufEnums -> Arrays
+                    .stream(ufEnums)
+                    .map(UfEnum::getId)
+                    .toList().toArray(new Long[]{})).orElseGet(() -> new Long[]{});
             return ResponseEntity.ok(
                 this.estabelecimentoMapper
                     .toDto(this.estabelecimentoQuery.getEstabelecimentos(Arrays.stream(ufFilter).toList()))
