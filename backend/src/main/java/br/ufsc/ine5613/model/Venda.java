@@ -88,6 +88,8 @@ import lombok.Data;
             WHERE (:clienteFilter IS NULL OR cc.cpf IN (:clienteFilter))
             AND   (:funcionarioFilter IS NULL OR fc.cpf IN (:funcionarioFilter))
             AND   (:estabelecimentoFilter IS NULL OR e.id_estabelecimento IN (:estabelecimentoFilter))
+            AND   (CAST(:dataLimInferiorFilter AS DATE) IS NULL OR v.data_hora_venda >= CAST(:dataLimInferiorFilter AS DATE))
+            AND   (CAST(:dataLimSuperiorFilter AS DATE) IS NULL OR v.data_hora_venda < CAST(:dataLimSuperiorFilter AS DATE))
             GROUP BY
                 v.id_venda_cargo,
                 v.data_hora_venda,

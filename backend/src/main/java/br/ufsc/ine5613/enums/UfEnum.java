@@ -34,15 +34,6 @@ public enum UfEnum {
   SP(26L, "SP", "São Paulo"),
   TO(27L, "TO", "Tocantins");
 
-  public static UfEnum getBySigla(String sigla) {
-    for (UfEnum uf : UfEnum.values()) {
-      if (uf.toString().equals(sigla)) {
-        return uf;
-      }
-    }
-    return null;
-  }
-
   public static UfEnum getById(Long id) {
     for (UfEnum uf : UfEnum.values()) {
       if (uf.getId().equals(id)) {

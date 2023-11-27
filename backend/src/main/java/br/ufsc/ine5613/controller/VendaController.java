@@ -6,6 +6,7 @@ import br.ufsc.ine5613.mapper.VendaMapper;
 import br.ufsc.ine5613.query.VendaQuery;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,11 +30,9 @@ public class VendaController {
   public ResponseEntity<List<VendaResponseDto>> getVendas(
       @RequestParam(required = false) Optional<Long[]> estabelecimentoId,
       @RequestParam(required = false) Optional<String[]> funcionarioCpf,
-      @RequestParam(required = false) Optional<String[]> clienteCpf
-      //            @RequestParam(required = false) Optional<LocalDateTime> dataLimInferior,    //
-      // TODO
-      //            @RequestParam(required = false) Optional<LocalDateTime> dataLimSuperior
-      ) {
+      @RequestParam(required = false) Optional<String[]> clienteCpf,
+      @RequestParam(required = false) Optional<LocalDate> dataLimInferior,
+      @RequestParam(required = false) Optional<LocalDate> dataLimSuperior) {
     try {
       val funcionarioFilter =
           funcionarioCpf
@@ -50,7 +49,12 @@ public class VendaController {
 
       return ResponseEntity.ok(
           this.vendaMapper.toResponseDto(
-              this.vendaQuery.getVendas(funcionarioFilter, clienteFilter, estabelecimentoFilter)));
+              this.vendaQuery.getVendas(
+                  funcionarioFilter,
+                  clienteFilter,
+                  estabelecimentoFilter,
+                  dataLimInferior.orElse(null),
+                  dataLimSuperior.orElse(null))));
     } catch (NullPointerException e) {
       return ResponseEntity.badRequest().build();
     }

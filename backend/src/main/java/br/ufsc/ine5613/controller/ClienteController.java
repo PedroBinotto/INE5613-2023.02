@@ -38,7 +38,7 @@ public class ClienteController {
     try {
       val nomeFilter =
           nome // TODO: Mover lógica para Service e tentar eliminar repeticao em
-               // Cliente/Funcionario/PessoaFisisca
+              // Cliente/Funcionario/PessoaFisisca
               .map(
                   value ->
                       Arrays.stream(value).map(String::toUpperCase).collect(Collectors.toList()))

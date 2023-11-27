@@ -2,8 +2,10 @@ package br.ufsc.ine5613.query;
 
 import br.ufsc.ine5613.dto.VendaDetailCompositeDto;
 import br.ufsc.ine5613.dto.VendaSaveDto;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -17,11 +19,16 @@ public class VendaQuery {
   public List<VendaDetailCompositeDto> getVendas(
       List<String> funcionarioFilter,
       List<String> clienteFilter,
-      List<Long> estabelecimentoFilter) {
+      List<Long> estabelecimentoFilter,
+      @Nullable LocalDate dataLimInferiorFilter,
+      @Nullable LocalDate dataLimSuperiorFilter) {
+    System.out.println("DATA " + dataLimInferiorFilter);
     val query = this.em.createNamedQuery("getVendas", VendaDetailCompositeDto.class);
     query.setParameter("estabelecimentoFilter", estabelecimentoFilter);
     query.setParameter("clienteFilter", clienteFilter);
     query.setParameter("funcionarioFilter", funcionarioFilter);
+    query.setParameter("dataLimInferiorFilter", dataLimInferiorFilter);
+    query.setParameter("dataLimSuperiorFilter", dataLimSuperiorFilter);
     return query.getResultList();
   }
 
