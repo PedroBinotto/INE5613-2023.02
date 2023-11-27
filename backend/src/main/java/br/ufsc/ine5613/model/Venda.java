@@ -2,8 +2,12 @@ package br.ufsc.ine5613.model;
 
 
 import br.ufsc.ine5613.dto.VendaDetailCompositeDto;
+import br.ufsc.ine5613.dto.VendaIdWrapperDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 
 import java.time.LocalDateTime;
 
@@ -51,61 +55,96 @@ import java.time.LocalDateTime;
 @NamedNativeQuery(
         name = "getVendas",
         query = """
-                    SELECT
-                    fc.id_funcionario AS funcionarioId,
-                    fc.cpf AS funcionarioCpf,
-                    fc.nome AS funcionarioNome,
-                    fc.sobrenome AS funcionarioSobrenome,
-                    e.id_estabelecimento AS estabelecimentoId,
-                    e.endereco_estabelecimento AS estabelecimentoEndereco,
-                    e.id_uf_estabelecimento estabelecimentoUfId,
-                    c.nome AS funcionarioCargo,
-                    cc.id_cliente AS clienteId,
-                    cc.cpf AS clienteCpf,
-                    cc.nome AS clienteNome,
-                    cc.sobrenome AS clienteSobrenome,
-                    to_json(v.data_hora_venda) #>> '{}' AS dataHoraVenda,
-                    json_agg(
-                        json_build_object(
-                            'id', COALESCE(p.id_produto, 0),
-                            'nome', COALESCE(p.nome, ''),
-                            'valor', COALESCE(p.valor, 0),
-                            'quantidade', COALESCE(rl.quantidade, 1)
-                        )) as produtos
-                    FROM tb_venda v
-                    JOIN (
-                        SELECT id_funcionario, cpf, nome, sobrenome
-                        FROM tb_funcionario
-                        JOIN tb_pessoa_fisica
-                        ON tb_pessoa_fisica.id_pessoa_fisica = tb_funcionario.id_pessoa_fisica_funcionario
-                    ) fc ON fc.id_funcionario = v.id_venda_funcionario
-                    JOIN (
-                        SELECT id_cliente, cpf, nome, sobrenome
-                        FROM tb_cliente
-                        JOIN tb_pessoa_fisica
-                        ON tb_pessoa_fisica.id_pessoa_fisica = tb_cliente.id_pessoa_fisica_cliente
-                    ) cc ON cc.id_cliente = v.id_venda_cliente
-                    JOIN tb_estabelecimento e ON v.id_venda_estabelecimento = e.id_estabelecimento
-                    JOIN tb_cargo c on v.id_venda_cargo = c.id_cargo
-                    JOIN tb_rl_venda_produto rl on rl.id_rl_venda_produto_v = v.id_venda
-                    JOIN tb_produto p on rl.id_rl_venda_produto_p = p.id_produto
-                    GROUP BY
-                        v.id_venda_cargo,
-                        v.data_hora_venda,
-                        cc.id_cliente,
-                        fc.cpf,
-                        fc.nome,
-                        fc.sobrenome,
-                        e.id_estabelecimento,
-                        e.endereco_estabelecimento,
-                        e.id_uf_estabelecimento,
-                        c.nome,
-                        fc.id_funcionario,
-                        cc.cpf,
-                        cc.nome,
-                        cc.sobrenome
-                """,
+            SELECT
+            fc.id_funcionario AS funcionarioId,
+            fc.cpf AS funcionarioCpf,
+            fc.nome AS funcionarioNome,
+            fc.sobrenome AS funcionarioSobrenome,
+            e.id_estabelecimento AS estabelecimentoId,
+            e.endereco_estabelecimento AS estabelecimentoEndereco,
+            e.id_uf_estabelecimento estabelecimentoUfId,
+            c.nome AS funcionarioCargo,
+            cc.id_cliente AS clienteId,
+            cc.cpf AS clienteCpf,
+            cc.nome AS clienteNome,
+            cc.sobrenome AS clienteSobrenome,
+            to_json(v.data_hora_venda) #>> '{}' AS dataHoraVenda,
+            json_agg(
+                json_build_object(
+                    'id', COALESCE(p.id_produto, 0),
+                    'nome', COALESCE(p.nome, ''),
+                    'valor', COALESCE(p.valor, 0),
+                    'quantidade', COALESCE(rl.quantidade, 1)
+                )) as produtos
+            FROM tb_venda v
+            JOIN (
+                SELECT id_funcionario, cpf, nome, sobrenome
+                FROM tb_funcionario
+                JOIN tb_pessoa_fisica
+                ON tb_pessoa_fisica.id_pessoa_fisica = tb_funcionario.id_pessoa_fisica_funcionario
+            ) fc ON fc.id_funcionario = v.id_venda_funcionario
+            JOIN (
+                SELECT id_cliente, cpf, nome, sobrenome
+                FROM tb_cliente
+                JOIN tb_pessoa_fisica
+                ON tb_pessoa_fisica.id_pessoa_fisica = tb_cliente.id_pessoa_fisica_cliente
+            ) cc ON cc.id_cliente = v.id_venda_cliente
+            JOIN tb_estabelecimento e ON v.id_venda_estabelecimento = e.id_estabelecimento
+            JOIN tb_cargo c on v.id_venda_cargo = c.id_cargo
+            JOIN tb_rl_venda_produto rl on rl.id_rl_venda_produto_v = v.id_venda
+            JOIN tb_produto p on rl.id_rl_venda_produto_p = p.id_produto
+            WHERE (:clienteFilter IS NULL OR cc.cpf IN (:clienteFilter))
+            AND   (:funcionarioFilter IS NULL OR fc.cpf IN (:funcionarioFilter))
+            AND   (:estabelecimentoFilter IS NULL OR e.id_estabelecimento IN (:estabelecimentoFilter))
+            GROUP BY
+                v.id_venda_cargo,
+                v.data_hora_venda,
+                cc.id_cliente,
+                fc.cpf,
+                fc.nome,
+                fc.sobrenome,
+                e.id_estabelecimento,
+                e.endereco_estabelecimento,
+                e.id_uf_estabelecimento,
+                c.nome,
+                fc.id_funcionario,
+                cc.cpf,
+                cc.nome,
+                cc.sobrenome
+        """,
         resultSetMapping = "VendaDetailCompositeMapping"
+)
+@NamedNativeQuery(
+        name = "saveVenda",
+        query = """
+            INSERT INTO tb_venda (
+                id_venda_funcionario,
+                id_venda_estabelecimento,
+                id_venda_cargo,
+                id_venda_cliente,
+                data_hora_venda   
+            ) VALUES (
+                :funcionarioId,        
+                :estabelecimentoId,        
+                :cargoId,        
+                :clienteId,        
+                NOW()
+            ) RETURNING id_venda
+        """
+)
+@NamedNativeQuery(
+        name = "saveVendaProdutos",
+        query = """
+            INSERT INTO tb_rl_venda_produto (
+                id_rl_venda_produto_p,
+                id_rl_venda_produto_v,
+                quantidade
+            ) VALUES (
+                :produtoId,
+                :vendaId,
+                :quantidade
+            )
+        """
 )
 public class Venda {
     @Id
