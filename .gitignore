@@ -42,7 +42,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
 develop-eggs/
 dist/
 downloads/
@@ -107,7 +106,6 @@ docs/_build/
 
 # PyBuilder
 .pybuilder/
-target/
 
 # Jupyter Notebook
 .ipynb_checkpoints

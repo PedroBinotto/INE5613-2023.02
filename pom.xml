@@ -28,7 +28,6 @@
   <description>Projeto final disciplina bancos de dados</description>
     <modules>
         <module>backend</module>
-        <module>frontend</module>
         <module>database</module>
         <module>dataloader</module>
     </modules>
