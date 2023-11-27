@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class EstabelecimentoResponseDto {
-    private Long id;
-    private String endereco;
-    private UfDto uf;
+  private Long id;
+  private String endereco;
+  private UfDto uf;
 }

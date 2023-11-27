@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface UfMapper extends DataMapper<UfDto, Uf> {
-    UfDto toDto(UfEnum ufEnum);
+  UfDto toDto(UfEnum ufEnum);
 }

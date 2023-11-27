@@ -10,14 +10,16 @@ import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
-public abstract class EstabelecimentoMapper implements DataMapper<EstabelecimentoResponseDto, Estabelecimento> {
-    @Autowired private UfMapper ufMapper;
+public abstract class EstabelecimentoMapper
+    implements DataMapper<EstabelecimentoResponseDto, Estabelecimento> {
+  @Autowired private UfMapper ufMapper;
 
-    @Mapping( target = "uf", ignore = true )
-    public abstract EstabelecimentoResponseDto toDto(Estabelecimento estabelecimento);
+  @Mapping(target = "uf", ignore = true)
+  public abstract EstabelecimentoResponseDto toDto(Estabelecimento estabelecimento);
 
-    @AfterMapping
-    void afterDtoMapping(@MappingTarget EstabelecimentoResponseDto dto, Estabelecimento estabelecimento) {
-        dto.setUf(this.ufMapper.toDto(UfEnum.getById(estabelecimento.getUfId())));
-    }
+  @AfterMapping
+  void afterDtoMapping(
+      @MappingTarget EstabelecimentoResponseDto dto, Estabelecimento estabelecimento) {
+    dto.setUf(this.ufMapper.toDto(UfEnum.getById(estabelecimento.getUfId())));
+  }
 }

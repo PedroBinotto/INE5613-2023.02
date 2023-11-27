@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class LotacaoResponseDto {
-    private FuncionarioDetailCompositeDto funcionario;
-    private EstabelecimentoResponseDto estabelecimento;
-    private CargoEnum cargo;
+  private FuncionarioDetailCompositeDto funcionario;
+  private EstabelecimentoResponseDto estabelecimento;
+  private CargoEnum cargo;
 }

@@ -13,27 +13,28 @@ import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
-public abstract class LotacaoMapper implements DataMapper<LotacaoResponseDto, LotacaoDetailCompositeDto> {
-    @Autowired private UfMapper ufMapper;
+public abstract class LotacaoMapper
+    implements DataMapper<LotacaoResponseDto, LotacaoDetailCompositeDto> {
+  @Autowired private UfMapper ufMapper;
 
-    @Mapping(target = "funcionario", ignore = true)
-    @Mapping(target = "estabelecimento", ignore = true)
-    @Mapping(target = "cargo", ignore = true)
-    public abstract LotacaoResponseDto toDto(LotacaoDetailCompositeDto lotacao);
+  @Mapping(target = "funcionario", ignore = true)
+  @Mapping(target = "estabelecimento", ignore = true)
+  @Mapping(target = "cargo", ignore = true)
+  public abstract LotacaoResponseDto toDto(LotacaoDetailCompositeDto lotacao);
 
-    @AfterMapping()
-    void afterDtoMapping(LotacaoDetailCompositeDto lotacao, @MappingTarget LotacaoResponseDto dto) {
-        dto.setFuncionario(new FuncionarioDetailCompositeDto(
-                lotacao.funcionarioId(),
-                lotacao.funcionarioCpf(),
-                lotacao.funcionarioNome(),
-                lotacao.funcionarioSobrenome()
-        ));
-        dto.setEstabelecimento(new EstabelecimentoResponseDto(
-                lotacao.estabelecimentoId(),
-                lotacao.estabelecimentoEndereco(),
-                this.ufMapper.toDto(UfEnum.getById(lotacao.estabelecimentoUfId()))
-        ));
-        dto.setCargo(CargoEnum.valueOf(lotacao.funcionarioCargo()));
-    }
+  @AfterMapping()
+  void afterDtoMapping(LotacaoDetailCompositeDto lotacao, @MappingTarget LotacaoResponseDto dto) {
+    dto.setFuncionario(
+        new FuncionarioDetailCompositeDto(
+            lotacao.funcionarioId(),
+            lotacao.funcionarioCpf(),
+            lotacao.funcionarioNome(),
+            lotacao.funcionarioSobrenome()));
+    dto.setEstabelecimento(
+        new EstabelecimentoResponseDto(
+            lotacao.estabelecimentoId(),
+            lotacao.estabelecimentoEndereco(),
+            this.ufMapper.toDto(UfEnum.getById(lotacao.estabelecimentoUfId()))));
+    dto.setCargo(CargoEnum.valueOf(lotacao.funcionarioCargo()));
+  }
 }

@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CargoEnum {
-    GERENTE(1L, "GERENTE"),
-    VENDEDOR(2L, "VENDEDOR");
+  GERENTE(1L, "GERENTE"),
+  VENDEDOR(2L, "VENDEDOR");
 
-    private final Long id;
-    private final String nome;
+  private final Long id;
+  private final String nome;
 }

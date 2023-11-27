@@ -8,18 +8,16 @@ import lombok.Data;
 @Table(name = "tb_uf")
 @SqlResultSetMapping(
     name = "UfMapping",
-    entities = @EntityResult(
-        entityClass = Uf.class,
-        fields = {
-            @FieldResult(name = "id", column = "id_uf"),
-            @FieldResult(name = "nome", column = "nome"),
-            @FieldResult(name = "sigla", column = "sigla"),
-        }
-    )
-)
+    entities =
+        @EntityResult(
+            entityClass = Uf.class,
+            fields = {
+              @FieldResult(name = "id", column = "id_uf"),
+              @FieldResult(name = "nome", column = "nome"),
+              @FieldResult(name = "sigla", column = "sigla"),
+            }))
 public class Uf {
-    @Id
-    Long id;
-    String nome;
-    String sigla;
+  @Id Long id;
+  String nome;
+  String sigla;
 }

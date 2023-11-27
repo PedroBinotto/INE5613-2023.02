@@ -1,56 +1,52 @@
 package br.ufsc.ine5613.model;
 
-
 import br.ufsc.ine5613.dto.VendaDetailCompositeDto;
 import jakarta.persistence.*;
-import lombok.Data;
-
 import java.time.LocalDateTime;
+import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "tb_venda")
 @SqlResultSetMapping(
     name = "VendaMapping",
-    entities = @EntityResult(
-        entityClass = Venda.class,
-        fields = {
-            @FieldResult(name = "id", column = "id_venda"),
-            @FieldResult(name = "funcionarioId", column = "id_venda_funcionario"),
-            @FieldResult(name = "clienteId", column = "id_venda_cliente"),
-            @FieldResult(name = "estabelecimentoId", column = "id_venda_estabelecimento"),
-            @FieldResult(name = "cargoId", column = "id_venda_cargo"),
-            @FieldResult(name = "dataHoraVenda", column = "data_hora_venda"),
-        }
-    )
-)
+    entities =
+        @EntityResult(
+            entityClass = Venda.class,
+            fields = {
+              @FieldResult(name = "id", column = "id_venda"),
+              @FieldResult(name = "funcionarioId", column = "id_venda_funcionario"),
+              @FieldResult(name = "clienteId", column = "id_venda_cliente"),
+              @FieldResult(name = "estabelecimentoId", column = "id_venda_estabelecimento"),
+              @FieldResult(name = "cargoId", column = "id_venda_cargo"),
+              @FieldResult(name = "dataHoraVenda", column = "data_hora_venda"),
+            }))
 @SqlResultSetMapping(
     name = "VendaDetailCompositeMapping",
-    classes={
-        @ConstructorResult(
-            targetClass = VendaDetailCompositeDto.class,
-            columns={
-                @ColumnResult(name = "funcionarioId"),
-                @ColumnResult(name = "funcionarioCpf"),
-                @ColumnResult(name = "funcionarioNome"),
-                @ColumnResult(name = "funcionarioSobrenome"),
-                @ColumnResult(name = "estabelecimentoId"),
-                @ColumnResult(name = "estabelecimentoEndereco"),
-                @ColumnResult(name = "estabelecimentoUfId"),
-                @ColumnResult(name = "funcionarioCargo"),
-                @ColumnResult(name = "clienteId"),
-                @ColumnResult(name = "clienteCpf"),
-                @ColumnResult(name = "clienteNome"),
-                @ColumnResult(name = "clienteSobrenome"),
-                @ColumnResult(name = "dataHoraVenda"),
-                @ColumnResult(name = "produtos")
-            }
-        )
-    }
-)
+    classes = {
+      @ConstructorResult(
+          targetClass = VendaDetailCompositeDto.class,
+          columns = {
+            @ColumnResult(name = "funcionarioId"),
+            @ColumnResult(name = "funcionarioCpf"),
+            @ColumnResult(name = "funcionarioNome"),
+            @ColumnResult(name = "funcionarioSobrenome"),
+            @ColumnResult(name = "estabelecimentoId"),
+            @ColumnResult(name = "estabelecimentoEndereco"),
+            @ColumnResult(name = "estabelecimentoUfId"),
+            @ColumnResult(name = "funcionarioCargo"),
+            @ColumnResult(name = "clienteId"),
+            @ColumnResult(name = "clienteCpf"),
+            @ColumnResult(name = "clienteNome"),
+            @ColumnResult(name = "clienteSobrenome"),
+            @ColumnResult(name = "dataHoraVenda"),
+            @ColumnResult(name = "produtos")
+          })
+    })
 @NamedNativeQuery(
-        name = "getVendas",
-        query = """
+    name = "getVendas",
+    query =
+        """
             SELECT
             fc.id_funcionario AS funcionarioId,
             fc.cpf AS funcionarioCpf,
@@ -108,11 +104,11 @@ import java.time.LocalDateTime;
                 cc.nome,
                 cc.sobrenome
         """,
-        resultSetMapping = "VendaDetailCompositeMapping"
-)
+    resultSetMapping = "VendaDetailCompositeMapping")
 @NamedNativeQuery(
-        name = "saveVenda",
-        query = """
+    name = "saveVenda",
+    query =
+        """
             INSERT INTO tb_venda (
                 id_venda_funcionario,
                 id_venda_estabelecimento,
@@ -126,11 +122,11 @@ import java.time.LocalDateTime;
                 :clienteId,
                 NOW()
             ) RETURNING id_venda
-        """
-)
+        """)
 @NamedNativeQuery(
-        name = "saveVendaProdutos",
-        query = """
+    name = "saveVendaProdutos",
+    query =
+        """
             INSERT INTO tb_rl_venda_produto (
                 id_rl_venda_produto_p,
                 id_rl_venda_produto_v,
@@ -140,14 +136,12 @@ import java.time.LocalDateTime;
                 :vendaId,
                 :quantidade
             )
-        """
-)
+        """)
 public class Venda {
-    @Id
-    Long id;
-    Long funcionarioId;
-    Long clienteId;
-    Long estabelecimentoId;
-    Long cargoId;
-    LocalDateTime dataHoraVenda;
+  @Id Long id;
+  Long funcionarioId;
+  Long clienteId;
+  Long estabelecimentoId;
+  Long cargoId;
+  LocalDateTime dataHoraVenda;
 }

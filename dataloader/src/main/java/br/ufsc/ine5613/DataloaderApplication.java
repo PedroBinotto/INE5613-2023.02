@@ -5,8 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class DataloaderApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(DataloaderApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(DataloaderApplication.class, args);
+  }
 }

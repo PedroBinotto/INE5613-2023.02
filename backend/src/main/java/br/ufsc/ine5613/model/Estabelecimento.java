@@ -8,58 +8,56 @@ import lombok.Data;
 @Table(name = "tb_estabelecimento")
 @SqlResultSetMapping(
     name = "EstabelecimentoMapping",
-    entities = @EntityResult(
-        entityClass = Estabelecimento.class,
-        fields = {
-            @FieldResult(name = "id", column = "id_estabelecimento"),
-            @FieldResult(name = "endereco", column = "endereco_estabelecimento"),
-            @FieldResult(name = "ufId", column = "id_uf_estabelecimento"),
-        }
-    )
-)
+    entities =
+        @EntityResult(
+            entityClass = Estabelecimento.class,
+            fields = {
+              @FieldResult(name = "id", column = "id_estabelecimento"),
+              @FieldResult(name = "endereco", column = "endereco_estabelecimento"),
+              @FieldResult(name = "ufId", column = "id_uf_estabelecimento"),
+            }))
 @NamedNativeQuery(
     name = "getEstabelecimentos",
-    query = """
+    query =
+        """
             SELECT * FROM tb_estabelecimento
             WHERE :ufFilter IS NULL
             OR id_uf_estabelecimento IN (:ufFilter)
     """,
-    resultSetMapping = "EstabelecimentoMapping"
-)
+    resultSetMapping = "EstabelecimentoMapping")
 @NamedNativeQuery(
-        name = "getEstabelecimentoById",
-        query = """
+    name = "getEstabelecimentoById",
+    query =
+        """
             SELECT *
             FROM tb_estabelecimento
             WHERE id_estabelecimento = :estabelecimentoId
             LIMIT 1
         """,
-        resultSetMapping = "EstabelecimentoMapping"
-)
+    resultSetMapping = "EstabelecimentoMapping")
 @NamedNativeQuery(
-        name = "saveEstabelecimento",
-        query = """
+    name = "saveEstabelecimento",
+    query =
+        """
             INSERT INTO tb_estabelecimento (endereco_estabelecimento, id_uf_estabelecimento)
             VALUES (:endereco, :ufId)
-        """
-)
+        """)
 @NamedNativeQuery(
-        name = "deleteEstabelecimentoById",
-        query = """
+    name = "deleteEstabelecimentoById",
+    query =
+        """
             DELETE FROM tb_estabelecimento WHERE id_estabelecimento = :estabelecimentoId
-        """
-)
+        """)
 @NamedNativeQuery(
-        name = "updateEstabelecimento",
-        query = """
+    name = "updateEstabelecimento",
+    query =
+        """
             UPDATE tb_estabelecimento
             SET endereco_estabelecimento = :endereco
             WHERE id_estabelecimento = :estabelecimentoId
-        """
-)
+        """)
 public class Estabelecimento {
-    @Id
-    Long id;
-    String endereco;
-    Long ufId;
+  @Id Long id;
+  String endereco;
+  Long ufId;
 }
