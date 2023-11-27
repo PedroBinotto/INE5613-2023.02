@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.val;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class VendaDetailCompositeDto {
     private String clienteNome;
     private String clienteSobrenome;
     private List<VendaProdutoDetailCompositeDto> produtos;
-//    private LocalDateTime dataHoraVenda;
+    private LocalDateTime dataHoraVenda;
 
     public VendaDetailCompositeDto(
         Long funcionarioId,
@@ -43,10 +44,16 @@ public class VendaDetailCompositeDto {
         String clienteCpf,
         String clienteNome,
         String clienteSobrenome,
+        String dataHoraVenda,
         String produtos
-//        LocalDateTime dataHoraVenda
     ) throws JsonProcessingException {
         val om = new ObjectMapper();
+
+        val parsedProdutos = om.readValue(
+                produtos,
+                new TypeReference<List<VendaProdutoDetailCompositeDto>>(){}
+        );
+
         this.funcionarioId = funcionarioId;
         this.funcionarioCpf = funcionarioCpf;
         this.funcionarioNome = funcionarioNome;
@@ -59,16 +66,9 @@ public class VendaDetailCompositeDto {
         this.clienteCpf = clienteCpf;
         this.clienteNome = clienteNome;
         this.clienteSobrenome = clienteSobrenome;
-//        this.dataHoraVenda = dataHoraVenda;
-
-        System.out.println(produtos);
-        val parsedProdutos = om.readValue(produtos, new TypeReference<List<VendaProdutoDetailCompositeDto>>(){});
-
-        System.out.println(parsedProdutos);
-
-        this.produtos =
-                parsedProdutos.get(0) == null
-                ? new ArrayList<>()
-                : parsedProdutos;
+        this.dataHoraVenda = LocalDateTime.parse(dataHoraVenda, DateTimeFormatter.ISO_DATE_TIME);
+        this.produtos = parsedProdutos.get(0) == null
+                        ? new ArrayList<>()
+                        : parsedProdutos;
     }
 }
