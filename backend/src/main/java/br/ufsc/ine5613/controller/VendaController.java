@@ -6,6 +6,7 @@ import br.ufsc.ine5613.query.VendaQuery;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,9 @@ public class VendaController {
             @RequestParam(required = false) Optional<UfEnum[]> uf
     ) {
         try {
-            return ResponseEntity.ok(this.vendaQuery.getVendas());
+            val res = this.vendaQuery.getVendas();
+            System.out.println(res);
+            return ResponseEntity.ok(res);
         } catch (NullPointerException e) {
             return ResponseEntity.badRequest().build();
         }

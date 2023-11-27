@@ -1,6 +1,7 @@
 package br.ufsc.ine5613.dto;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public class VendaDetailCompositeDto {
     private String clienteNome;
     private String clienteSobrenome;
     private List<VendaProdutoDetailCompositeDto> produtos;
-    private LocalDateTime dataHoraVenda;
+//    private LocalDateTime dataHoraVenda;
 
     public VendaDetailCompositeDto(
         Long funcionarioId,
@@ -42,8 +43,8 @@ public class VendaDetailCompositeDto {
         String clienteCpf,
         String clienteNome,
         String clienteSobrenome,
-        String produtos,
-        LocalDateTime dataHoraVenda
+        String produtos
+//        LocalDateTime dataHoraVenda
     ) throws JsonProcessingException {
         val om = new ObjectMapper();
         this.funcionarioId = funcionarioId;
@@ -58,10 +59,15 @@ public class VendaDetailCompositeDto {
         this.clienteCpf = clienteCpf;
         this.clienteNome = clienteNome;
         this.clienteSobrenome = clienteSobrenome;
-        this.dataHoraVenda = dataHoraVenda;
+//        this.dataHoraVenda = dataHoraVenda;
 
-        val parsedProdutos = om.readValue(produtos, List.class);      // FIXME: Gambiarra
-        this.produtos = parsedProdutos.get(0) == null
+        System.out.println(produtos);
+        val parsedProdutos = om.readValue(produtos, new TypeReference<List<VendaProdutoDetailCompositeDto>>(){});
+
+        System.out.println(parsedProdutos);
+
+        this.produtos =
+                parsedProdutos.get(0) == null
                 ? new ArrayList<>()
                 : parsedProdutos;
     }

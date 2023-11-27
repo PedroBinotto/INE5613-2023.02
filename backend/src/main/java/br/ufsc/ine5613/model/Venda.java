@@ -1,7 +1,6 @@
 package br.ufsc.ine5613.model;
 
 
-import br.ufsc.ine5613.dto.PessoaFisicaDetailCompositeDto;
 import br.ufsc.ine5613.dto.VendaDetailCompositeDto;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -43,8 +42,8 @@ import java.time.LocalDateTime;
                 @ColumnResult(name = "clienteCpf"),
                 @ColumnResult(name = "clienteNome"),
                 @ColumnResult(name = "clienteSobrenome"),
-                @ColumnResult(name = "produtos"),
-                @ColumnResult(name = "dataHoraVenda")
+                @ColumnResult(name = "produtos")
+//                @ColumnResult(name = "dataHoraVenda")
             }
         )
     }
@@ -71,8 +70,7 @@ import java.time.LocalDateTime;
                     'nome', COALESCE(p.nome, ''),
                     'valor', COALESCE(p.valor, 0),
                     'quantidade', COALESCE(rl.quantidade, 1)
-                )) as produtos,
-            v.data_hora_venda as dataHoraVenda
+                )) as produtos
             FROM tb_venda v
             JOIN (
                 SELECT id_funcionario, cpf, nome, sobrenome
