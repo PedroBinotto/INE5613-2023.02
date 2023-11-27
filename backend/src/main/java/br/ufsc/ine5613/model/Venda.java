@@ -2,12 +2,8 @@ package br.ufsc.ine5613.model;
 
 
 import br.ufsc.ine5613.dto.VendaDetailCompositeDto;
-import br.ufsc.ine5613.dto.VendaIdWrapperDto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 
 import java.time.LocalDateTime;
 
@@ -122,12 +118,12 @@ import java.time.LocalDateTime;
                 id_venda_estabelecimento,
                 id_venda_cargo,
                 id_venda_cliente,
-                data_hora_venda   
+                data_hora_venda
             ) VALUES (
-                :funcionarioId,        
-                :estabelecimentoId,        
-                :cargoId,        
-                :clienteId,        
+                :funcionarioId,
+                :estabelecimentoId,
+                :cargoId,
+                :clienteId,
                 NOW()
             ) RETURNING id_venda
         """

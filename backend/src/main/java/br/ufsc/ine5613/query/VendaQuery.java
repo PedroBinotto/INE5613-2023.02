@@ -1,17 +1,13 @@
 package br.ufsc.ine5613.query;
 
 import br.ufsc.ine5613.dto.VendaDetailCompositeDto;
-import br.ufsc.ine5613.dto.VendaIdWrapperDto;
 import br.ufsc.ine5613.dto.VendaSaveDto;
-import br.ufsc.ine5613.model.Venda;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
-import java.sql.Statement;
 import java.util.List;
 
 @Component

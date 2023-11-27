@@ -1,10 +1,7 @@
 package br.ufsc.ine5613.query;
 
-import br.ufsc.ine5613.dto.ClienteDetailCompositeDto;
-import br.ufsc.ine5613.dto.ClienteSaveDto;
 import br.ufsc.ine5613.dto.LotacaoDetailCompositeDto;
 import br.ufsc.ine5613.dto.LotacaoSaveDto;
-import br.ufsc.ine5613.enums.CargoEnum;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

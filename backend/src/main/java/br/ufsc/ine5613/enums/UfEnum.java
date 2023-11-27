@@ -53,7 +53,7 @@ public enum UfEnum {
         return null;
     }
 
-    private Long id;
-    private String sigla;
-    private String nome;
+    private final Long id;
+    private final String sigla;
+    private final String nome;
 }

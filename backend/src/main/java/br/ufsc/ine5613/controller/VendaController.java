@@ -1,10 +1,7 @@
 package br.ufsc.ine5613.controller;
 
-import br.ufsc.ine5613.dto.LotacaoSaveDto;
-import br.ufsc.ine5613.dto.VendaDetailCompositeDto;
 import br.ufsc.ine5613.dto.VendaResponseDto;
 import br.ufsc.ine5613.dto.VendaSaveDto;
-import br.ufsc.ine5613.enums.UfEnum;
 import br.ufsc.ine5613.mapper.VendaMapper;
 import br.ufsc.ine5613.query.VendaQuery;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,7 +11,6 @@ import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

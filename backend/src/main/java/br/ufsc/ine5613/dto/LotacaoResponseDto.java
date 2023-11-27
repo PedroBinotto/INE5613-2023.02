@@ -3,7 +3,6 @@ package br.ufsc.ine5613.dto;
 import br.ufsc.ine5613.enums.CargoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor

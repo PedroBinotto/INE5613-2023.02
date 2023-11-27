@@ -3,7 +3,6 @@ package br.ufsc.ine5613.mapper;
 import br.ufsc.ine5613.dto.*;
 import br.ufsc.ine5613.enums.CargoEnum;
 import br.ufsc.ine5613.enums.UfEnum;
-import br.ufsc.ine5613.model.Produto;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

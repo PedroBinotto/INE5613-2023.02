@@ -20,8 +20,8 @@ import lombok.Data;
 @NamedNativeQuery(
     name = "getEstabelecimentos",
     query = """
-            SELECT * FROM tb_estabelecimento 
-            WHERE :ufFilter IS NULL 
+            SELECT * FROM tb_estabelecimento
+            WHERE :ufFilter IS NULL
             OR id_uf_estabelecimento IN (:ufFilter)
     """,
     resultSetMapping = "EstabelecimentoMapping"
@@ -30,8 +30,8 @@ import lombok.Data;
         name = "getEstabelecimentoById",
         query = """
             SELECT *
-            FROM tb_estabelecimento 
-            WHERE id_estabelecimento = :estabelecimentoId 
+            FROM tb_estabelecimento
+            WHERE id_estabelecimento = :estabelecimentoId
             LIMIT 1
         """,
         resultSetMapping = "EstabelecimentoMapping"
@@ -52,9 +52,9 @@ import lombok.Data;
 @NamedNativeQuery(
         name = "updateEstabelecimento",
         query = """
-            UPDATE tb_estabelecimento 
+            UPDATE tb_estabelecimento
             SET endereco_estabelecimento = :endereco
-            WHERE id_estabelecimento = :estabelecimentoId 
+            WHERE id_estabelecimento = :estabelecimentoId
         """
 )
 public class Estabelecimento {

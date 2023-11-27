@@ -9,6 +9,6 @@ public enum CargoEnum {
     GERENTE(1L, "GERENTE"),
     VENDEDOR(2L, "VENDEDOR");
 
-    private Long id;
-    private String nome;
+    private final Long id;
+    private final String nome;
 }
