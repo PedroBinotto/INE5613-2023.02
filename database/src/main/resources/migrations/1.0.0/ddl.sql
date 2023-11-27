@@ -103,9 +103,9 @@ CREATE TABLE tb_produto (
 
 -- tb_rl_venda_produto
 CREATE TABLE tb_rl_venda_produto (
-  id_rl_venda_produto_v BIGINT NOT NULL,
-  id_rl_venda_produto_p BIGINT NOT NULL,
-  quantidade            NUMERIC(10, 2) NOT NULL DEFAULT 1,
+  id_rl_venda_produto_v BIGINT   NOT NULL,
+  id_rl_venda_produto_p BIGINT   NOT NULL,
+  quantidade            INTEGER  NOT NULL DEFAULT 1,
 
   CONSTRAINT pk_rl_venda_produto   PRIMARY KEY (id_rl_venda_produto_v, id_rl_venda_produto_p),
   CONSTRAINT fk_rl_venda_produto_v FOREIGN KEY (id_rl_venda_produto_v) REFERENCES tb_venda (id_venda),
